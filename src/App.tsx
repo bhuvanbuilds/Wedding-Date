@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import type { PointerEvent } from 'react'
 import './App.css'
 
@@ -57,6 +57,7 @@ function ScratchHeart({
   const previousPointRef = useRef<Point | null>(null)
   const baseAlphaRef = useRef(0)
   const revealedRef = useRef(false)
+  const heartPath = useMemo(() => new Path2D(HEART_PATH), [])
 
   useLayoutEffect(() => {
     if (!revealed) return
@@ -96,7 +97,7 @@ function ScratchHeart({
       const backingHeight = Math.round(bounds.height * pixelRatio)
       if (canvas.width !== backingWidth) canvas.width = backingWidth
       if (canvas.height !== backingHeight) canvas.height = backingHeight
-      const context = canvas.getContext('2d', { willReadFrequently: true })
+      const context = canvas.getContext('2d')
       if (!context) return
 
       context.setTransform(
@@ -109,9 +110,8 @@ function ScratchHeart({
       )
       context.clearRect(0, 0, HEART_WIDTH, HEART_HEIGHT)
       if (revealedRef.current) return
-      const heart = new Path2D(HEART_PATH)
       context.save()
-      context.clip(heart)
+      context.clip(heartPath)
 
       context.fillStyle = '#4a101d'
       context.fillRect(0, 0, HEART_WIDTH, HEART_HEIGHT)
@@ -125,7 +125,7 @@ function ScratchHeart({
 
       context.globalCompositeOperation = 'destination-out'
       context.save()
-      context.clip(heart)
+      context.clip(heartPath)
       for (const stroke of strokesRef.current) {
         context.beginPath()
         context.moveTo(stroke[0].x * HEART_WIDTH, stroke[0].y * HEART_HEIGHT)
@@ -161,15 +161,14 @@ function ScratchHeart({
       observer.disconnect()
       window.removeEventListener('resize', render)
     }
-  }, [])
+  }, [heartPath])
 
-  const getPoint = (event: PointerEvent<HTMLCanvasElement>) => {
-    const rect = event.currentTarget.getBoundingClientRect()
-    const x = ((event.clientX - rect.left) / rect.width) * HEART_WIDTH
-    const y = ((event.clientY - rect.top) / rect.height) * HEART_HEIGHT
-    const heart = new Path2D(HEART_PATH)
-    const context = event.currentTarget.getContext('2d')
-    if (!context?.isPointInPath(heart, x, y)) return null
+  const getPoint = (clientX: number, clientY: number) => {
+    const canvas = canvasRef.current
+    if (!canvas) return null
+    const rect = canvas.getBoundingClientRect()
+    const x = ((clientX - rect.left) / rect.width) * HEART_WIDTH
+    const y = ((clientY - rect.top) / rect.height) * HEART_HEIGHT
     return { x: x / HEART_WIDTH, y: y / HEART_HEIGHT }
   }
 
@@ -190,7 +189,7 @@ function ScratchHeart({
 
   const handlePointerDown = (event: PointerEvent<HTMLCanvasElement>) => {
     if (revealedRef.current) return
-    const point = getPoint(event)
+    const point = getPoint(event.clientX, event.clientY)
     if (!point) return
     event.currentTarget.setPointerCapture(event.pointerId)
     const stroke = [point]
@@ -210,7 +209,7 @@ function ScratchHeart({
       0,
     )
     context.globalCompositeOperation = 'destination-out'
-    context.clip(new Path2D(HEART_PATH))
+    context.clip(heartPath)
     context.beginPath()
     context.arc(point.x * HEART_WIDTH, point.y * HEART_HEIGHT, SCRATCH_RADIUS, 0, Math.PI * 2)
     context.fill()
@@ -220,17 +219,10 @@ function ScratchHeart({
   const handlePointerMove = (event: PointerEvent<HTMLCanvasElement>) => {
     const stroke = currentStrokeRef.current
     if (!stroke || revealedRef.current) return
-    const point = getPoint(event)
-    if (!point) {
-      previousPointRef.current = null
-      return
-    }
-    stroke.push(point)
-    const previous = previousPointRef.current
-    previousPointRef.current = point
     const canvas = canvasRef.current
     const context = canvas?.getContext('2d')
     if (!canvas || !context) return
+    const nativeEvents = event.nativeEvent.getCoalescedEvents?.() ?? [event.nativeEvent]
     context.save()
     context.setTransform(
       canvas.width / HEART_WIDTH,
@@ -241,22 +233,30 @@ function ScratchHeart({
       0,
     )
     context.globalCompositeOperation = 'destination-out'
-    context.clip(new Path2D(HEART_PATH))
-    if (previous) {
+    context.clip(heartPath)
+    for (const nativeEvent of nativeEvents) {
+      const point = getPoint(nativeEvent.clientX, nativeEvent.clientY)
+      if (!point) {
+        previousPointRef.current = null
+        continue
+      }
+      stroke.push(point)
+      const previous = previousPointRef.current
+      previousPointRef.current = point
       context.beginPath()
-      context.moveTo(previous.x * HEART_WIDTH, previous.y * HEART_HEIGHT)
-      context.lineTo(point.x * HEART_WIDTH, point.y * HEART_HEIGHT)
-      context.lineWidth = SCRATCH_WIDTH
-      context.lineCap = 'round'
-      context.lineJoin = 'round'
-      context.stroke()
-    } else {
-      context.beginPath()
-      context.arc(point.x * HEART_WIDTH, point.y * HEART_HEIGHT, SCRATCH_RADIUS, 0, Math.PI * 2)
-      context.fill()
+      if (previous) {
+        context.moveTo(previous.x * HEART_WIDTH, previous.y * HEART_HEIGHT)
+        context.lineTo(point.x * HEART_WIDTH, point.y * HEART_HEIGHT)
+        context.lineWidth = SCRATCH_WIDTH
+        context.lineCap = 'round'
+        context.lineJoin = 'round'
+        context.stroke()
+      } else {
+        context.arc(point.x * HEART_WIDTH, point.y * HEART_HEIGHT, SCRATCH_RADIUS, 0, Math.PI * 2)
+        context.fill()
+      }
     }
     context.restore()
-    if (stroke.length % 12 === 0) checkProgress()
   }
 
   const handlePointerUp = (event: PointerEvent<HTMLCanvasElement>) => {
