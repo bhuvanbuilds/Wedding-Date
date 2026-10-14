@@ -1,0 +1,450 @@
+.invitation-page {
+  position: relative;
+  display: grid;
+  min-height: 100svh;
+  place-items: center;
+  overflow: hidden;
+  padding: 36px 20px 30px;
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse at 51% 43%, rgba(110, 31, 43, .56), transparent 48%),
+    radial-gradient(ellipse at 50% 100%, #23060d 2%, transparent 56%),
+    linear-gradient(135deg, #4b101c 0%, #300911 52%, #3d0c17 100%);
+}
+
+.invitation-page::before,
+.invitation-page::after {
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  content: '';
+  inset: 0;
+}
+
+.invitation-page::before {
+  opacity: .24;
+  background-image:
+    radial-gradient(ellipse at center, rgba(255, 220, 191, .24) 0 1px, transparent 1.5px),
+    radial-gradient(ellipse at center, rgba(15, 0, 4, .45) 0 1px, transparent 1.5px);
+  background-position: 0 0, 13px 17px;
+  background-size: 29px 31px, 37px 41px;
+  mix-blend-mode: soft-light;
+}
+
+.invitation-page::after {
+  box-shadow: inset 0 0 150px 35px rgba(10, 0, 3, .55);
+}
+
+.ambient-glow {
+  position: absolute;
+  z-index: -1;
+  width: min(90vw, 780px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: rgba(130, 46, 56, .12);
+  filter: blur(80px);
+}
+
+.invitation-card {
+  position: relative;
+  width: min(100%, 490px);
+  min-height: 690px;
+  padding: 3px;
+  background:
+    repeating-linear-gradient(5deg, rgba(105, 77, 46, .025) 0 1px, transparent 1px 4px),
+    #e9d8b9;
+  filter: drop-shadow(0 24px 35px rgba(12, 0, 4, .48));
+  clip-path: polygon(
+    1% 0.5%, 5% 1%, 9% 0.4%, 14% 1%, 20% .5%, 25% 1%, 31% .4%, 37% 1%,
+    43% .5%, 49% 1%, 56% .4%, 62% 1%, 68% .5%, 75% 1%, 81% .4%, 87% 1%,
+    93% .5%, 99% 1%, 99.5% 7%, 99% 13%, 99.5% 20%, 99% 26%, 99.5% 33%,
+    99% 40%, 99.5% 47%, 99% 54%, 99.5% 60%, 99% 67%, 99.5% 74%, 99% 81%,
+    99.5% 88%, 99% 94%, 99.5% 99%, 94% 99.5%, 88% 99%, 82% 99.5%,
+    76% 99%, 70% 99.5%, 64% 99%, 58% 99.5%, 52% 99%, 46% 99.5%, 40% 99%,
+    34% 99.5%, 28% 99%, 22% 99.5%, 16% 99%, 10% 99.5%, 4% 99%, .5% 99.5%,
+    1% 94%, .5% 88%, 1% 81%, .5% 74%, 1% 67%, .5% 60%, 1% 53%, .5% 47%,
+    1% 40%, .5% 33%, 1% 26%, .5% 20%, 1% 13%, .5% 7%
+  );
+}
+
+.card-content {
+  position: relative;
+  display: flex;
+  min-height: 684px;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  padding: 48px 28px 30px;
+  border: 1px solid rgba(131, 95, 60, .46);
+  background:
+    radial-gradient(ellipse at 14% 18%, rgba(255, 255, 255, .35), transparent 48%),
+    radial-gradient(ellipse at 85% 80%, rgba(150, 111, 68, .1), transparent 56%),
+    repeating-linear-gradient(93deg, rgba(90, 61, 38, .025) 0 1px, transparent 1px 5px),
+    #f0e2c7;
+  box-shadow: inset 0 0 26px rgba(116, 78, 47, .13);
+  text-align: center;
+}
+
+.card-content::before,
+.card-content::after {
+  position: absolute;
+  width: 68px;
+  height: 68px;
+  border-color: rgba(143, 102, 69, .34);
+  content: '';
+  pointer-events: none;
+}
+
+.card-content::before {
+  top: 15px;
+  left: 15px;
+  border-top: 1px solid;
+  border-left: 1px solid;
+}
+
+.card-content::after {
+  right: 15px;
+  bottom: 15px;
+  border-right: 1px solid;
+  border-bottom: 1px solid;
+}
+
+.eyebrow,
+.card-footer,
+.scratch-instructions > p {
+  font-family: Georgia, 'Times New Roman', serif;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  margin: 0;
+  color: #7a4c40;
+  font-size: 10px;
+  letter-spacing: .24em;
+}
+
+.ornament {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  color: #9b6256;
+}
+
+.ornament span {
+  width: 36px;
+  height: 1px;
+  background: #ba9580;
+}
+
+.ornament svg {
+  width: 13px;
+  height: 13px;
+  fill: currentColor;
+}
+
+h1 {
+  margin: 11px 0 0;
+  color: #63212c;
+  font-family: 'Great Vibes', 'Brush Script MT', cursive;
+  font-size: clamp(2.7rem, 8vw, 3.55rem);
+  font-weight: 400;
+  line-height: 1.12;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .45);
+}
+
+.card-note {
+  margin: 7px 0 0;
+  color: #8b6959;
+  font-size: 15px;
+  font-style: italic;
+  letter-spacing: .035em;
+}
+
+.heart-scratch {
+  position: relative;
+  width: min(100%, 318px);
+  aspect-ratio: 10 / 9;
+  margin: 25px auto 20px;
+  filter: drop-shadow(0 10px 8px rgba(67, 27, 24, .21));
+}
+
+.heart-art,
+.scratch-canvas,
+.heart-date {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.heart-art {
+  z-index: 0;
+  overflow: visible;
+}
+
+.heart-date {
+  z-index: 1;
+}
+
+.scratch-canvas {
+  z-index: 2;
+}
+
+.heart-date {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 0 4%;
+  color: #55202b;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .45);
+}
+
+.date-day {
+  font-size: clamp(4.6rem, 20vw, 6.5rem);
+  font-weight: 500;
+  line-height: .77;
+  letter-spacing: -.065em;
+}
+
+.date-month-year {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 13px;
+  margin-top: 13px;
+}
+
+.date-month {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: .34em;
+  text-indent: .34em;
+}
+
+.date-year {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: .85rem;
+  letter-spacing: .33em;
+  text-indent: .33em;
+}
+
+.scratch-canvas {
+  border: 0;
+  touch-action: none;
+  cursor: crosshair;
+  transition: opacity .85s ease, visibility .85s ease;
+}
+
+.scratch-canvas:active {
+  cursor: grabbing;
+}
+
+.is-revealed .scratch-canvas {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.is-revealed .heart-date {
+  z-index: 4;
+}
+
+.card-footer {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  margin-top: auto;
+  color: #957563;
+  font-size: 8px;
+  letter-spacing: .18em;
+}
+
+.footer-flourish {
+  color: #9b6256;
+  font-size: 12px;
+}
+
+.scratch-instructions {
+  position: relative;
+  z-index: 1;
+  margin-top: 20px;
+  color: #f0dcca;
+  text-align: center;
+  text-shadow: 0 2px 9px rgba(10, 0, 4, .5);
+}
+
+.scratch-instructions > p {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: .25em;
+}
+
+.scratch-instructions button {
+  margin-top: 9px;
+  padding: 4px 8px;
+  border: 0;
+  border-bottom: 1px solid rgba(239, 214, 194, .35);
+  background: transparent;
+  color: rgba(240, 220, 202, .68);
+  cursor: pointer;
+  font-size: 12px;
+  font-style: italic;
+  transition: color .2s ease, border-color .2s ease;
+}
+
+.scratch-instructions button:hover,
+.scratch-instructions button:focus-visible {
+  border-color: #f0dcca;
+  color: #fff2e5;
+}
+
+.scratch-instructions button:focus-visible {
+  outline: 1px solid #f0dcca;
+  outline-offset: 3px;
+}
+
+.rose {
+  position: absolute;
+  z-index: -1;
+  width: clamp(105px, 18vw, 220px);
+  filter: drop-shadow(0 12px 13px rgba(10, 0, 3, .4));
+  opacity: .86;
+  pointer-events: none;
+}
+
+.rose-top-left {
+  top: -16px;
+  left: -26px;
+  transform: rotate(-27deg);
+}
+
+.rose-top-right {
+  top: -18px;
+  right: -24px;
+  transform: rotate(33deg) scale(.86);
+}
+
+.rose-bottom-left {
+  bottom: -22px;
+  left: -30px;
+  transform: rotate(27deg) scale(.88);
+}
+
+.rose-bottom-right {
+  right: -28px;
+  bottom: -18px;
+  transform: rotate(-23deg) scale(1.08);
+}
+
+.petal {
+  position: absolute;
+  z-index: -1;
+  width: 20px;
+  height: 31px;
+  border-radius: 80% 15% 75% 20%;
+  background: linear-gradient(135deg, #a7464c, #4b101b 76%);
+  box-shadow: inset 2px 1px 3px rgba(237, 168, 144, .35), 0 5px 8px rgba(10, 0, 3, .3);
+  opacity: .72;
+  transform: rotate(42deg);
+}
+
+.petal-one {
+  top: 16%;
+  right: 16%;
+}
+
+.petal-two {
+  top: 25%;
+  left: 11%;
+  width: 14px;
+  height: 22px;
+  transform: rotate(106deg);
+}
+
+.petal-three {
+  right: 9%;
+  bottom: 22%;
+  width: 16px;
+  height: 25px;
+  transform: rotate(-35deg);
+}
+
+.petal-four {
+  bottom: 13%;
+  left: 18%;
+  width: 13px;
+  height: 20px;
+  transform: rotate(79deg);
+}
+
+@media (min-width: 700px) {
+  .invitation-page {
+    padding-block: 44px;
+  }
+
+  .invitation-card {
+    min-height: 725px;
+    width: min(100%, 510px);
+  }
+
+  .card-content {
+    min-height: 719px;
+    padding-top: 54px;
+  }
+
+  .heart-scratch {
+    width: min(100%, 330px);
+    margin-top: 30px;
+    margin-bottom: 22px;
+  }
+}
+
+@media (max-width: 420px) {
+  .invitation-page {
+    padding: 28px 12px 22px;
+  }
+
+  .invitation-card {
+    min-height: 625px;
+  }
+
+  .card-content {
+    min-height: 619px;
+    padding: 40px 18px 26px;
+  }
+
+  .heart-scratch {
+    width: min(100%, 290px);
+    margin-top: 20px;
+    margin-bottom: 15px;
+  }
+
+  .eyebrow {
+    font-size: 9px;
+  }
+
+  .scratch-instructions {
+    margin-top: 17px;
+  }
+
+  .scratch-instructions > p {
+    font-size: 9px;
+    letter-spacing: .2em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
