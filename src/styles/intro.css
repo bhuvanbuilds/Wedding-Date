@@ -1,0 +1,237 @@
+/* ── Scene 1 · Cinematic opening ──────────────────────── */
+.intro {
+  display: flex;
+  min-height: 100vh;
+  min-height: 100svh;
+  flex-direction: column;
+  align-items: stretch;
+  padding: calc(var(--nav-h) + var(--safe-top)) var(--gutter) calc(76px + var(--safe-bottom));
+  color: var(--c-ivory);
+}
+
+.intro__bg {
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 42% at 50% 30%, rgba(198, 30, 69, 0.2), transparent 70%),
+    radial-gradient(ellipse 50% 30% at 50% 30%, rgba(216, 180, 119, 0.07), transparent 70%),
+    radial-gradient(ellipse 130% 60% at 50% 115%, rgba(110, 16, 41, 0.6), transparent 62%),
+    linear-gradient(180deg, #0f0207 0%, var(--c-midnight) 45%, #22060f 100%);
+}
+
+.intro .intro__motes,
+.intro .intro__heart {
+  position: absolute;
+  z-index: 1;
+}
+
+.intro .intro__petals {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  pointer-events: none;
+}
+
+.intro .intro__heart {
+  z-index: 2;
+}
+
+/* The heart lives in this flexible space; the canvas reads its geometry. */
+.intro__heart-hit {
+  z-index: 4;
+  display: block;
+  width: 100%;
+  min-height: 150px;
+  flex: 1 1 auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  touch-action: manipulation;
+}
+
+.intro__heart-hit:focus-visible {
+  outline-offset: -12px;
+}
+
+.intro__content {
+  z-index: 5;
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.intro__eyebrow {
+  margin: 0 0 14px;
+  color: var(--c-blush);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.intro__names {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 300;
+  line-height: 0.98;
+}
+
+.intro__name {
+  display: block;
+  margin-right: -0.13em;
+  font-size: clamp(31px, 9.7vw, 86px);
+  letter-spacing: 0.13em;
+  text-shadow: 0 0 28px rgba(198, 30, 69, 0.45);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.intro__amp {
+  display: block;
+  margin: 0.02em 0 -0.06em;
+  background: var(--gold-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-family: var(--font-script);
+  font-size: clamp(42px, 12.5vw, 104px);
+  font-weight: 400;
+  line-height: 0.9;
+  filter: drop-shadow(0 0 18px rgba(216, 180, 119, 0.35));
+}
+
+.intro__tagline {
+  margin: 18px 0 0;
+  color: var(--c-blush);
+  font-family: var(--font-display);
+  font-size: clamp(19px, 5.3vw, 26px);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+.intro__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-top: 24px;
+}
+
+.intro__actions .btn {
+  min-width: 232px;
+  min-height: 52px;
+}
+
+.intro__actions .text-link {
+  font-size: 16px;
+  color: var(--c-blush);
+}
+
+.intro__scroll {
+  position: absolute !important;
+  bottom: calc(18px + var(--safe-bottom));
+  left: var(--gutter);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--c-blush);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.intro__scroll i {
+  position: relative;
+  width: 1px;
+  height: 34px;
+  overflow: hidden;
+  background: rgba(240, 201, 207, 0.25);
+}
+
+.intro__scroll i::after {
+  position: absolute;
+  top: -50%;
+  left: 0;
+  width: 1px;
+  height: 50%;
+  background: var(--c-gold);
+  content: '';
+  animation: scroll-cue 2.4s var(--ease-soft) infinite;
+}
+
+@keyframes scroll-cue {
+  to {
+    top: 110%;
+  }
+}
+
+.intro__skip {
+  position: absolute !important;
+  right: calc(var(--gutter) - 8px);
+  bottom: calc(10px + var(--safe-bottom));
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 6px;
+  padding: 0 8px;
+  border: 0;
+  background: none;
+  color: var(--c-blush);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.intro__skip svg {
+  width: 14px;
+  height: 14px;
+}
+
+.intro .vertical-rail {
+  color: var(--c-gold);
+}
+
+.intro__veil {
+  position: absolute !important;
+  z-index: 20 !important;
+  inset: 0;
+  background: #0b0105;
+  pointer-events: none;
+  /* Safety net: never leave the veil up if scripts are slow. */
+  animation: veil-safety 0.01s linear 6s forwards;
+}
+
+@keyframes veil-safety {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@media (max-height: 640px) {
+  .intro__tagline {
+    margin-top: 10px;
+  }
+
+  .intro__actions {
+    margin-top: 14px;
+  }
+}
+
+@media (min-width: 900px) {
+  .intro__actions {
+    flex-direction: row;
+    gap: 22px;
+  }
+}

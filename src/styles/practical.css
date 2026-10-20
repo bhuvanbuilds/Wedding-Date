@@ -1,0 +1,1082 @@
+/* ── Scene 6 · Find your way ──────────────────────────── */
+.travel {
+  padding-top: calc(var(--nav-h) + var(--safe-top) + 56px);
+  padding-bottom: 110px;
+  background:
+    radial-gradient(ellipse 80% 40% at 100% 0%, rgba(240, 201, 207, 0.4), transparent 60%),
+    repeating-linear-gradient(93deg, rgba(90, 61, 38, 0.02) 0 1px, transparent 1px 5px), var(--c-ivory);
+}
+
+.travel {
+  --torn-color: var(--c-crimson);
+}
+
+@media (min-width: 900px) {
+  .travel {
+    --torn-color: var(--c-wine);
+  }
+}
+
+.travel.torn-bottom::after {
+  background: #2a0611;
+}
+
+.travel__head {
+  max-width: 980px;
+  margin: 0 auto 30px;
+}
+
+.travel__title {
+  margin: 0;
+  color: var(--c-burgundy);
+  font-family: var(--font-display);
+  font-size: clamp(56px, 17vw, 160px);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+}
+
+.travel__lede {
+  max-width: 34ch;
+  margin: 14px 0 0;
+  color: var(--c-ink-soft);
+  font-size: 15.5px;
+  line-height: 1.6;
+}
+
+.venue-tabs {
+  position: relative;
+  display: flex;
+  max-width: 480px;
+  margin: 0 0 22px;
+  padding: 4px;
+  border: 1px solid rgba(41, 21, 26, 0.18);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+@media (min-width: 1020px) {
+  .venue-tabs,
+  .venue-panel {
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .venue-tabs {
+    max-width: 980px;
+  }
+}
+
+.venue-tabs button {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-height: 46px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--c-ink);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition: color 0.4s ease;
+}
+
+.venue-tabs button.is-active {
+  color: var(--c-ivory);
+}
+
+.venue-tabs__indicator {
+  position: absolute;
+  z-index: 0;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  max-width: calc(50% - 4px);
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--c-burgundy), var(--c-wine));
+  box-shadow: 0 8px 20px -10px rgba(76, 11, 32, 0.8);
+  transition: transform 0.5s var(--ease-out);
+}
+
+.venue-panel {
+  max-width: 980px;
+  animation: fade-up 0.6s var(--ease-out);
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+.venue {
+  display: grid;
+  gap: 24px;
+}
+
+.venue__map {
+  position: relative;
+  display: grid;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  place-items: center;
+  border: 1px solid rgba(138, 101, 52, 0.35);
+  border-radius: 4px;
+  background: #f3e6d0;
+  color: var(--c-ink);
+}
+
+.venue__map iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.map-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.map-art__pulse {
+  animation: pulse 2.6s ease-out infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+@keyframes pulse {
+  from {
+    opacity: 0.35;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.6);
+  }
+}
+
+.venue__map-load {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 18px;
+  border: 1px solid rgba(41, 21, 26, 0.2);
+  border-radius: 999px;
+  background: var(--c-ivory);
+  color: var(--c-ink);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transform: translateX(-50%);
+}
+
+.venue__map-load svg {
+  width: 16px;
+  height: 16px;
+}
+
+.venue__map-note {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  width: max-content;
+  max-width: 90%;
+  margin: 0;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(255, 247, 236, 0.92);
+  color: var(--c-ink-soft);
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-style: italic;
+  text-align: center;
+  transform: translateX(-50%);
+}
+
+.venue__for {
+  margin: 0 0 6px;
+  color: var(--c-gold-deep);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.venue__name {
+  margin: 0;
+  color: var(--c-burgundy);
+  font-family: var(--font-display);
+  font-size: clamp(30px, 8.6vw, 44px);
+  font-weight: 500;
+  line-height: 1.05;
+}
+
+.venue__name .tba {
+  font-weight: 400;
+}
+
+.venue__address {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0 0;
+  color: var(--c-ink-soft);
+  font-size: 15px;
+  font-style: normal;
+  line-height: 1.55;
+}
+
+p.venue__address.tba {
+  display: block;
+  font-size: 18px;
+}
+
+.venue__landmark {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0 0;
+  font-size: 14px;
+}
+
+.venue__landmark svg {
+  color: var(--c-ruby);
+}
+
+.venue__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.venue__actions .btn--ink {
+  flex: 1 1 auto;
+}
+
+.transport {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid rgba(138, 101, 52, 0.25);
+  list-style: none;
+}
+
+.transport__item {
+  display: grid;
+  grid-template-columns: 46px 1fr;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(138, 101, 52, 0.18);
+}
+
+.transport__icon {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  border: 1px solid rgba(138, 101, 52, 0.4);
+  border-radius: 50%;
+  color: var(--c-burgundy);
+  font-size: 22px;
+}
+
+.transport__text h4 {
+  margin: 4px 0 4px;
+  color: var(--c-ink);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.transport__text p {
+  margin: 0;
+  color: var(--c-ink-soft);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.transport__text p.tba {
+  font-size: 17px;
+}
+
+.arrival {
+  padding: 18px 20px;
+  border-left: 2px solid var(--c-ruby);
+  background: rgba(240, 201, 207, 0.25);
+}
+
+.arrival h4 {
+  margin: 0 0 8px;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.arrival ul {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+@media (min-width: 900px) {
+  .venue {
+    grid-template-columns: 1.15fr 1fr;
+    align-items: start;
+    column-gap: 44px;
+  }
+
+  .transport {
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 44px;
+  }
+
+  .arrival {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ── Scene 7 · The wishes garden ──────────────────────── */
+.wishes {
+  padding-top: calc(var(--nav-h) + var(--safe-top) + 60px);
+  padding-bottom: 120px;
+  color: var(--c-ivory);
+}
+
+.wishes__bg {
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 40% at 0% 10%, rgba(198, 30, 69, 0.22), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 100% 70%, rgba(216, 180, 119, 0.1), transparent 70%),
+    linear-gradient(180deg, #2a0611 0%, var(--c-crimson) 40%, #2a0611 100%);
+}
+
+.wishes .canvas-fill {
+  z-index: 1;
+}
+
+.wishes__head {
+  max-width: 980px;
+  margin: 0 auto 34px;
+}
+
+.wishes .section-label {
+  color: var(--c-blush);
+}
+
+.wishes__title {
+  margin: 0;
+  color: var(--c-ivory);
+  font-family: var(--font-display);
+  font-size: clamp(50px, 15vw, 140px);
+  font-weight: 300;
+  letter-spacing: -0.015em;
+  line-height: 0.92;
+}
+
+.wishes__lede {
+  max-width: 36ch;
+  margin: 18px 0 0;
+  color: var(--c-blush);
+  font-family: var(--font-display);
+  font-size: clamp(19px, 5vw, 23px);
+  font-style: italic;
+  line-height: 1.45;
+}
+
+.wishes__mode {
+  display: inline-block;
+  margin: 18px 0 0;
+  padding: 8px 14px;
+  border: 1px dashed rgba(216, 180, 119, 0.5);
+  border-radius: 8px;
+  color: var(--c-gold);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+.wishes__layout {
+  display: grid;
+  max-width: 980px;
+  gap: 54px;
+  margin: 0 auto;
+}
+
+/* Form: a sheet of letter paper */
+.wish-form {
+  position: relative;
+  padding: 30px 22px 24px;
+  border-radius: 3px;
+  background: var(--paper);
+  box-shadow:
+    0 40px 70px -36px rgba(0, 0, 0, 0.9),
+    0 0 0 1px rgba(216, 180, 119, 0.35);
+  color: var(--c-ink);
+}
+
+.wish-form::before {
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(138, 101, 52, 0.28);
+  content: '';
+  pointer-events: none;
+}
+
+.wish-form__field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+}
+
+.wish-form label {
+  margin-bottom: 6px;
+  color: var(--c-gold-deep);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.wish-form input,
+.wish-form textarea {
+  width: 100%;
+  padding: 12px 2px;
+  border: 0;
+  border-bottom: 1px solid rgba(41, 21, 26, 0.3);
+  border-radius: 0;
+  background: transparent;
+  color: var(--c-ink);
+  font-family: var(--font-display);
+  font-size: 20px;
+  line-height: 1.45;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.wish-form textarea {
+  min-height: 140px;
+  padding: 12px;
+  border: 1px solid rgba(41, 21, 26, 0.22);
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.35);
+  resize: vertical;
+}
+
+.wish-form input::placeholder,
+.wish-form textarea::placeholder {
+  color: rgba(91, 58, 64, 0.5);
+  font-style: italic;
+}
+
+.wish-form input:focus,
+.wish-form textarea:focus {
+  border-color: var(--c-burgundy);
+  box-shadow: 0 1px 0 var(--c-burgundy);
+  outline: none;
+}
+
+.wish-form textarea:focus {
+  box-shadow: 0 0 0 3px rgba(198, 30, 69, 0.12);
+}
+
+.wish-form [aria-invalid='true'] {
+  border-color: #a3173a;
+}
+
+.wish-form__meta {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.wish-form__count {
+  flex: none;
+  color: var(--c-ink-soft);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.wish-form__count.is-low {
+  color: #a3173a;
+}
+
+.wish-form__error {
+  margin: 6px 0 0;
+  color: #a3173a;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.wish-form__meta .wish-form__error {
+  margin: 0;
+}
+
+.wish-form__error--global {
+  padding: 10px 12px;
+  border-radius: 4px;
+  background: rgba(198, 30, 69, 0.08);
+}
+
+.wish-form__trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.wish-form__submit {
+  width: 100%;
+  min-height: 54px;
+  margin-top: 4px;
+}
+
+.wish-form__status {
+  min-height: 0;
+}
+
+.wish-form__success {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 14px 0 0;
+  color: var(--c-burgundy);
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-style: italic;
+  line-height: 1.4;
+  animation: fade-up 0.6s var(--ease-out);
+}
+
+.wish-form__success svg {
+  flex: none;
+  margin-top: 4px;
+  color: var(--c-gold-deep);
+}
+
+/* Garden */
+.wishes__garden-title {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0 0 20px;
+  color: var(--c-gold);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.wishes__garden-title small {
+  color: var(--c-blush);
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-style: italic;
+  letter-spacing: 0;
+}
+
+.garden {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  columns: 1;
+  column-gap: 16px;
+}
+
+@media (min-width: 360px) {
+  .garden {
+    columns: 2;
+  }
+}
+
+@media (min-width: 900px) {
+  .garden {
+    columns: 3;
+  }
+}
+
+.wish-note {
+  margin: 0 0 16px;
+  break-inside: avoid;
+  transform: rotate(var(--tilt, 0deg));
+}
+
+.wish-note.is-blooming {
+  animation: bloom 0.9s var(--ease-out) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+@keyframes bloom {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.92) rotate(calc(var(--tilt, 0deg) - 5deg));
+  }
+}
+
+.wish-note--float .wish-note__button {
+  animation: drift 7s ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+}
+
+@keyframes drift {
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.wish-note__button {
+  position: relative;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 10px;
+  padding: 22px 14px 14px;
+  border: 0;
+  border-radius: 2px;
+  background: var(--paper);
+  box-shadow:
+    0 18px 30px -18px rgba(0, 0, 0, 0.85),
+    0 0 0 1px rgba(216, 180, 119, 0.25);
+  color: var(--c-ink);
+  text-align: left;
+  transition:
+    transform 0.35s var(--ease-out),
+    box-shadow 0.35s ease;
+}
+
+.wish-note__button:active {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) {
+  .wish-note__button:hover {
+    box-shadow:
+      0 24px 40px -18px rgba(0, 0, 0, 0.9),
+      0 0 0 1px rgba(216, 180, 119, 0.55),
+      0 0 30px -6px rgba(198, 30, 69, 0.45);
+  }
+}
+
+.wish-note__pin {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  margin-left: -7px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #e0607e, #8a1532 60%, #4a0819);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.wish-note__message {
+  display: -webkit-box;
+  overflow: hidden;
+  font-family: var(--font-display);
+  font-size: 17.5px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  white-space: pre-line;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 6;
+}
+
+.wish-note__name {
+  color: var(--c-burgundy);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  overflow-wrap: anywhere;
+  text-transform: uppercase;
+}
+
+.wish-note__badge {
+  color: var(--c-gold-deep);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-style: italic;
+}
+
+.wish-note--skeleton {
+  height: 150px;
+  padding: 22px 14px;
+  border-radius: 2px;
+  background: rgba(243, 230, 208, 0.08);
+  box-shadow: 0 0 0 1px rgba(216, 180, 119, 0.15);
+}
+
+.wish-note--skeleton span {
+  display: block;
+  height: 10px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, rgba(243, 230, 208, 0.08), rgba(243, 230, 208, 0.22), rgba(243, 230, 208, 0.08));
+  background-size: 200% 100%;
+  animation: shimmer-bg 1.6s linear infinite;
+}
+
+.wish-note--skeleton span:nth-child(2) {
+  width: 80%;
+}
+
+.wish-note--skeleton span:nth-child(3) {
+  width: 45%;
+}
+
+@keyframes shimmer-bg {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.garden-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 36px 20px;
+  border: 1px dashed rgba(216, 180, 119, 0.35);
+  border-radius: 4px;
+  text-align: center;
+}
+
+.garden-state p {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-style: italic;
+}
+
+.garden-state__hint {
+  color: var(--c-blush);
+  font-family: var(--font-sans) !important;
+  font-size: 13px !important;
+  font-style: normal !important;
+  letter-spacing: 0.06em;
+}
+
+.garden-state__sprout {
+  width: 64px;
+  height: 64px;
+  fill: none;
+  stroke: var(--c-gold);
+  stroke-linecap: round;
+  stroke-width: 1.3;
+}
+
+.garden-more {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+/* Dialog */
+.wish-dialog {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  height: fit-content;
+  width: min(100% - 32px, 540px);
+  max-width: none;
+  max-height: calc(100svh - 48px);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--c-ink);
+  overflow: visible;
+}
+
+.wish-dialog::backdrop {
+  background: rgba(12, 2, 6, 0.78);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.wish-dialog[open] {
+  animation: letter-in 0.6s var(--ease-out);
+}
+
+@keyframes letter-in {
+  from {
+    opacity: 0;
+    transform: translateY(30px) rotate(-2deg) scale(0.96);
+  }
+}
+
+.wish-dialog__paper {
+  position: relative;
+  max-height: calc(100svh - 48px);
+  overflow-y: auto;
+  padding: 44px 26px 30px;
+  border-radius: 3px;
+  background: var(--paper);
+  box-shadow: 0 50px 90px -30px rgba(0, 0, 0, 0.9);
+}
+
+.wish-dialog__paper::before {
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(138, 101, 52, 0.3);
+  content: '';
+  pointer-events: none;
+}
+
+.wish-dialog__close {
+  position: absolute !important;
+  z-index: 2;
+  top: 10px;
+  right: 10px;
+  color: var(--c-ink);
+}
+
+.wish-dialog__eyebrow {
+  margin: 0 0 16px;
+  color: var(--c-gold-deep);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.wish-dialog__message {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(21px, 5.6vw, 25px);
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+  white-space: pre-line;
+}
+
+.wish-dialog__name {
+  margin: 22px 0 0;
+  color: var(--c-burgundy);
+  font-family: var(--font-script);
+  font-size: 32px;
+  overflow-wrap: anywhere;
+}
+
+.wish-dialog__date {
+  margin: 4px 0 0;
+  color: var(--c-ink-soft);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 900px) {
+  .wishes__layout {
+    grid-template-columns: minmax(320px, 0.9fr) 1.6fr;
+    align-items: start;
+  }
+
+  .wish-form {
+    transform: rotate(-0.8deg);
+  }
+}
+
+/* ── Scene 8 · The final moment ───────────────────────── */
+.finale {
+  display: flex;
+  min-height: 100vh;
+  min-height: 100svh;
+  align-items: flex-end;
+  justify-content: center;
+  padding-top: calc(var(--nav-h) + var(--safe-top) + 34svh);
+  padding-bottom: calc(64px + var(--safe-bottom));
+  color: var(--c-ivory);
+  cursor: default;
+}
+
+.finale__bg {
+  inset: 0;
+  background:
+    radial-gradient(ellipse 120% 50% at 50% 105%, rgba(198, 30, 69, 0.42), transparent 62%),
+    radial-gradient(ellipse 80% 30% at 50% 100%, rgba(216, 180, 119, 0.18), transparent 70%),
+    linear-gradient(180deg, #2a0611 0%, var(--c-midnight) 32%, #0d0206 72%, #1a040b 100%);
+}
+
+.finale .finale__sky,
+.finale .finale__petals {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+}
+
+.finale .finale__petals {
+  pointer-events: none;
+}
+
+.finale .finale__horizon {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 30%;
+  background: linear-gradient(180deg, transparent, rgba(13, 2, 6, 0.75));
+  pointer-events: none;
+}
+
+.finale__content {
+  z-index: 3 !important;
+  display: flex;
+  max-width: 760px;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  pointer-events: none;
+}
+
+.finale__content > button,
+.finale__content > .finale__actions {
+  pointer-events: auto;
+}
+
+.finale__eyebrow {
+  margin: 0 0 18px;
+  color: var(--c-gold);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.finale__title {
+  max-width: 13ch;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(40px, 11.5vw, 92px);
+  font-weight: 300;
+  line-height: 1.02;
+  text-shadow: 0 0 40px rgba(198, 30, 69, 0.5);
+  text-wrap: balance;
+}
+
+.finale__signature {
+  margin: 18px 0 0;
+  background: var(--gold-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-family: var(--font-script);
+  font-size: clamp(32px, 9vw, 54px);
+  line-height: 1.2;
+}
+
+.finale__date {
+  margin: 6px 0 0;
+  color: var(--c-blush);
+  font-size: 11px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.finale__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.finale__actions .btn {
+  min-width: 250px;
+}
+
+.finale__share-note {
+  margin: 12px 0 0;
+  color: var(--c-blush);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.finale__secret-heart {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  margin-top: 26px;
+  border: 1px solid rgba(216, 180, 119, 0.35);
+  border-radius: 50%;
+  background: rgba(24, 5, 13, 0.4);
+  color: var(--c-gold);
+  transition:
+    transform 0.3s var(--ease-out),
+    color 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+.finale__secret-heart svg {
+  width: 20px;
+  height: 20px;
+}
+
+.finale__secret-heart:active {
+  transform: scale(0.88);
+}
+
+.finale__secret-heart.is-open {
+  color: var(--c-ruby);
+  box-shadow: 0 0 30px rgba(198, 30, 69, 0.6);
+}
+
+.finale__secret-heart.is-open svg {
+  fill: currentColor;
+}
+
+.finale__secret {
+  max-width: 30ch;
+  min-height: 1.4em;
+  margin: 12px 0 0;
+  color: var(--c-blush);
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-style: italic;
+  line-height: 1.45;
+  opacity: 0.7;
+  transition: opacity 0.6s ease;
+}
+
+.finale__secret.is-open {
+  font-size: 19px;
+  opacity: 1;
+}
+
+.finale__hint {
+  margin: 14px 0 0;
+  color: rgba(240, 201, 207, 0.55);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+}
+
+@media (min-width: 700px) {
+  .finale__actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .finale__actions .btn {
+    min-width: 0;
+  }
+}
