@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import type { PointerEvent } from 'react'
-import { ease, gsap, mediaConditions, SplitText, useGSAP } from '../animations/gsap'
+import { ease, gsap, mediaConditions, SplitText, splitClasses, useGSAP } from '../animations/gsap'
 import { LanternSky } from '../components/atmosphere/LanternSky'
 import type { LanternSkyApi } from '../components/atmosphere/LanternSky'
 import { PetalField } from '../components/atmosphere/PetalField'
@@ -33,14 +33,14 @@ export function FinaleSection() {
           })
           return
         }
-        const heading = new SplitText('.finale__title', { type: 'lines,words', mask: 'lines' })
+        const heading = new SplitText('.finale__title', { ...splitClasses, type: 'lines,words', mask: 'lines' })
         gsap
           .timeline({
             defaults: { ease: ease.enter },
             scrollTrigger: { trigger: '.finale__content', start: 'top 75%', once: true },
           })
           .from('.finale__eyebrow', { autoAlpha: 0, y: 10, duration: 1 })
-          .from(heading.words, { yPercent: 110, duration: 1.5, stagger: 0.07 }, 0.15)
+          .from(heading.words, { yPercent: 160, duration: 1.5, stagger: 0.07 }, 0.15)
           .from('.finale__signature', { autoAlpha: 0, y: 14, filter: 'blur(6px)', duration: 1.4 }, 0.9)
           .from(
             '.finale__date, .finale__actions > *, .finale__secret-heart',

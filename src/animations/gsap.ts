@@ -23,6 +23,12 @@ export const ease = {
 
 export const duration = { xs: 0.3, s: 0.6, m: 1, l: 1.6, xl: 2.4 } as const
 
+/**
+ * Classes for SplitText pieces. Masks inherit them with a -mask suffix, which
+ * base.css uses to give masks room for ascenders, descenders and swashes.
+ */
+export const splitClasses = { wordsClass: 'split-word', charsClass: 'split-char', linesClass: 'split-line' } as const
+
 export const stagger = { chars: 0.035, words: 0.06, lines: 0.12, items: 0.1 } as const
 
 /** Shared gsap.matchMedia conditions. */

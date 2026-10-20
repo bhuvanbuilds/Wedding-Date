@@ -1,6 +1,6 @@
 # A Little Universe of Love
 
-The wedding website of **Sam Speryan & Prithiksha** — 08 February 2027.
+The wedding website of **Sam Sperjan & Prithiksha** — 08 February 2027.
 
 A mobile-first, cinematic invitation built for guests opening a WhatsApp link on their phones:
 

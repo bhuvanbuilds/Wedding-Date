@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { ease, gsap, mediaConditions, SplitText, useGSAP } from '../animations/gsap'
+import { ease, gsap, mediaConditions, SplitText, splitClasses, useGSAP } from '../animations/gsap'
 import { GlowField } from '../components/atmosphere/GlowField'
 import { EventCard } from '../components/events/EventCard'
 import { SectionLabel, VerticalRail } from '../components/shared/Decor'
@@ -25,9 +25,9 @@ export function CelebrationsSection() {
           )
           return
         }
-        const title = new SplitText('.celebrations__title', { type: 'words,chars', mask: 'words' })
+        const title = new SplitText('.celebrations__title', { ...splitClasses, type: 'words,chars', mask: 'words' })
         gsap.from(title.chars, {
-          yPercent: 110,
+          yPercent: 160,
           duration: 1.2,
           ease: ease.enter,
           stagger: 0.03,

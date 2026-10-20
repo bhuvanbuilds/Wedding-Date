@@ -310,6 +310,17 @@ a {
   fill: currentColor;
 }
 
+/* SplitText masks hide text that is still sliding in, but a mask the exact
+   height of the line box would also crop descenders (J, y, g), accents and
+   script swashes. Padding + equal negative margin enlarges the visible
+   window without moving the layout. */
+.split-word-mask,
+.split-char-mask,
+.split-line-mask {
+  padding: 0.14em 0.06em 0.26em;
+  margin: -0.14em -0.06em -0.26em;
+}
+
 .tba {
   font-family: var(--font-display);
   font-style: italic;

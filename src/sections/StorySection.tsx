@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { ease, gsap, mediaConditions, SplitText, useGSAP } from '../animations/gsap'
+import { ease, gsap, mediaConditions, SplitText, splitClasses, useGSAP } from '../animations/gsap'
 import { RoseSprig, SectionLabel, VerticalRail } from '../components/shared/Decor'
 import { wedding } from '../config/wedding'
 import type { Person, StoryPhoto } from '../types/wedding'
@@ -52,7 +52,7 @@ export function StorySection() {
         }
 
         // Verse: words brighten as the guest reads down the page.
-        const verseSplit = new SplitText('.verse__text', { type: 'words' })
+        const verseSplit = new SplitText('.verse__text', { ...splitClasses, type: 'words' })
         gsap.fromTo(
           verseSplit.words,
           { opacity: 0.14 },
@@ -72,9 +72,9 @@ export function StorySection() {
           scrollTrigger: { trigger: '.verse__ref', start: 'top 88%', once: true },
         })
 
-        const title = new SplitText('.story__title', { type: 'chars', mask: 'chars' })
+        const title = new SplitText('.story__title', { ...splitClasses, type: 'chars', mask: 'chars' })
         gsap.from(title.chars, {
-          yPercent: 105,
+          yPercent: 160,
           duration: 1.3,
           ease: ease.enter,
           stagger: 0.05,

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { ease, gsap, mediaConditions, SplitText, useGSAP } from '../animations/gsap'
+import { ease, gsap, mediaConditions, SplitText, splitClasses, useGSAP } from '../animations/gsap'
 import { GlowField } from '../components/atmosphere/GlowField'
 import { SectionLabel, VerticalRail } from '../components/shared/Decor'
 import { WishDialog } from '../components/wishes/WishDialog'
@@ -77,13 +77,13 @@ export function WishesSection() {
           })
           return
         }
-        const title = new SplitText('.wishes__title', { type: 'words,chars', mask: 'words' })
+        const title = new SplitText('.wishes__title', { ...splitClasses, type: 'words,chars', mask: 'words' })
         const tl = gsap.timeline({
           defaults: { ease: ease.enter },
           scrollTrigger: { trigger: '.wishes__head', start: 'top 82%', once: true },
         })
         tl.from('.wishes__head .section-label', { autoAlpha: 0, y: 12, duration: 1 })
-          .from(title.chars, { yPercent: 110, duration: 1.2, stagger: 0.03 }, 0.1)
+          .from(title.chars, { yPercent: 160, duration: 1.2, stagger: 0.03 }, 0.1)
           .from('.wishes__lede', { autoAlpha: 0, y: 16, duration: 1 }, 0.5)
           .from('.wish-form', { autoAlpha: 0, y: 40, rotate: -1.5, duration: 1.4 }, 0.6)
         return () => title.revert()

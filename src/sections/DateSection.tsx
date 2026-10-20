@@ -1,5 +1,5 @@
 import { useMemo, useRef } from 'react'
-import { ease, gsap, mediaConditions, SplitText, useGSAP } from '../animations/gsap'
+import { ease, gsap, mediaConditions, SplitText, splitClasses, useGSAP } from '../animations/gsap'
 import { GlowField } from '../components/atmosphere/GlowField'
 import { AddToCalendar } from '../components/shared/AddToCalendar'
 import { GoldRule, SectionLabel, VerticalRail } from '../components/shared/Decor'
@@ -79,9 +79,9 @@ export function DateSection() {
           stagger: 0.15,
           scrollTrigger: { trigger: '.giant-date', start: 'top 85%', once: true },
         })
-        const heading = new SplitText('.date__heading', { type: 'words', mask: 'words' })
+        const heading = new SplitText('.date__heading', { ...splitClasses, type: 'words', mask: 'words' })
         gsap.from(heading.words, {
-          yPercent: 100,
+          yPercent: 160,
           duration: 1.2,
           ease: ease.enter,
           stagger: 0.06,

@@ -429,7 +429,8 @@
 }
 
 .invitation__save {
-  margin: 0;
+  padding: 0.18em 0.2em 0.2em;
+  margin: -0.18em 0 -0.2em;
   background: var(--gold-text);
   -webkit-background-clip: text;
   background-clip: text;

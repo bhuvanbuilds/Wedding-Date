@@ -47,7 +47,7 @@ export const wedding: WeddingConfig = {
   projectName: 'A Little Universe of Love',
 
   couple: {
-    partnerOne: { fullName: 'Sam Speryan', shortName: 'Sam' },
+    partnerOne: { fullName: 'Sam Sperjan', shortName: 'Sam' },
     partnerTwo: { fullName: 'Prithiksha', shortName: 'Prithiksha' },
     monogram: 'S & P',
   },

@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import type { MouseEvent } from 'react'
-import { duration, ease, gsap, mediaConditions, SplitText, stagger, useGSAP } from '../animations/gsap'
+import { duration, ease, gsap, mediaConditions, SplitText, splitClasses, stagger, useGSAP } from '../animations/gsap'
 import { GlowField } from '../components/atmosphere/GlowField'
 import { PetalField } from '../components/atmosphere/PetalField'
 import { HeartCanvas } from '../components/intro/HeartCanvas'
@@ -36,8 +36,8 @@ export function IntroSection() {
           return
         }
 
-        const names = new SplitText('.intro__name', { type: 'words,chars', mask: 'words' })
-        const tagline = new SplitText('.intro__tagline', { type: 'words' })
+        const names = new SplitText('.intro__name', { ...splitClasses, type: 'words,chars', mask: 'words' })
+        const tagline = new SplitText('.intro__tagline', { ...splitClasses, type: 'words' })
 
         const tl = gsap.timeline({ defaults: { ease: ease.enter } })
         tl.to('.intro__veil', { autoAlpha: 0, duration: 1.4, ease: 'sine.out' })
@@ -46,7 +46,7 @@ export function IntroSection() {
           .to(state, { glow: 1, duration: 2, ease: 'sine.inOut' }, 1.3)
           .to(state, { beat: 1, duration: 1.2, ease: 'sine.in' }, 1.9)
           .from('.intro__eyebrow', { autoAlpha: 0, y: 12, duration: duration.m }, 1.3)
-          .from(names.chars, { yPercent: 110, rotate: 6, duration: 1.3, stagger: stagger.chars }, 1.5)
+          .from(names.chars, { yPercent: 160, rotate: 6, duration: 1.3, stagger: stagger.chars }, 1.5)
           .from('.intro__amp', { autoAlpha: 0, scale: 0.6, rotate: -12, duration: 1.6 }, 1.85)
           .from(tagline.words, { autoAlpha: 0, y: 14, filter: 'blur(6px)', duration: 1.1, stagger: stagger.words }, 2.3)
           .from('.intro__petals', { autoAlpha: 0, duration: 2.4, ease: 'sine.inOut' }, 1.8)
