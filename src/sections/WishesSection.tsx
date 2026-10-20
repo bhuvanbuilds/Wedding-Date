@@ -97,10 +97,10 @@ export function WishesSection() {
     <section id="wishes" ref={root} className="scene wishes" data-nav-theme="dark" aria-labelledby="wishes-title">
       <div className="wishes__bg" aria-hidden="true" />
       <GlowField density={48} heartRatio={0.16} colors={['#D8B477', '#F0C9CF', '#C61E45']} rise={8} />
-      <VerticalRail side="left">Chapter 06 — Connection</VerticalRail>
+      <VerticalRail side="left">Chapter 07 — Connection</VerticalRail>
 
       <header className="wishes__head">
-        <SectionLabel index="06">The wishes garden</SectionLabel>
+        <SectionLabel index="07">The wishes garden</SectionLabel>
         <h2 id="wishes-title" className="wishes__title">
           {wedding.wishes.heading}
         </h2>

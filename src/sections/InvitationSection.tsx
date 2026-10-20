@@ -68,7 +68,7 @@ export function InvitationSection() {
 
     context.add(() => {
       const tl = gsap.timeline({ defaults: { ease: ease.enter } })
-      tl.to('.scratch-canvas', { autoAlpha: 0, scale: 1.06, filter: 'blur(6px)', duration: 0.9, ease: 'power2.out' }, 0)
+      tl.to('.scratch-canvas', { autoAlpha: 0, scale: 1.08, duration: 0.9, ease: 'power2.out' }, 0)
         .to(card, { scale: 1.035, y: -8, duration: 0.5, ease: 'power2.out' }, 0)
         .to(card, { scale: 1, y: 0, duration: 1.4, ease: 'elastic.out(1, 0.55)' }, 0.5)
         .fromTo('.heart-scratch__glow', { autoAlpha: 0, scale: 0.5 }, { autoAlpha: 1, scale: 1, duration: 1.6 }, 0.1)

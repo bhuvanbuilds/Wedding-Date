@@ -90,6 +90,7 @@ export function LanternSky({ apiRef }: { apiRef?: RefObject<LanternSkyApi | null
 
   useCanvasLoop(canvasRef, {
     animate: !reduced,
+    maxDpr: 1.25,
     resize: ({ width, height }) => {
       const count = Math.round(Math.max(18, ((width * height) / 1_000_000) * 64 * qualityScale()))
       lanterns.current = Array.from({ length: count }, () => make(width, height, Math.random() * height))

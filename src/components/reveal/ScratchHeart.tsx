@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef } from 'react'
 import type { PointerEvent } from 'react'
 import { wedding } from '../../config/wedding'
+import { pauseAmbient } from '../../lib/ambient'
 import { burst } from '../../lib/fx'
 
 /*
@@ -17,6 +18,57 @@ const REVEAL_THRESHOLD = 0.6
 const [REVEAL_DAY, REVEAL_MONTH, REVEAL_YEAR] = wedding.dateRevealText.split(/\s+/)
 
 type Point = { x: number; y: number }
+
+/*
+ * Progress is tracked on a coarse grid of cells inside the heart instead of
+ * reading pixels back from the canvas (getImageData stalls the GPU on phones).
+ */
+const CELL = 10
+const GRID_COLS = Math.ceil(HEART_WIDTH / CELL)
+const GRID_ROWS = Math.ceil(HEART_HEIGHT / CELL)
+
+function createCoverage(heart: Path2D) {
+  const probe = document.createElement('canvas').getContext('2d')
+  const inside = new Uint8Array(GRID_COLS * GRID_ROWS)
+  let total = 0
+  for (let row = 0; row < GRID_ROWS; row++) {
+    for (let col = 0; col < GRID_COLS; col++) {
+      if (probe?.isPointInPath(heart, col * CELL + CELL / 2, row * CELL + CELL / 2)) {
+        inside[row * GRID_COLS + col] = 1
+        total++
+      }
+    }
+  }
+  const cleared = new Uint8Array(GRID_COLS * GRID_ROWS)
+  let count = 0
+  const reach = SCRATCH_RADIUS + CELL * 0.35
+  const mark = (x: number, y: number) => {
+    const c0 = Math.max(0, Math.floor((x - reach) / CELL))
+    const c1 = Math.min(GRID_COLS - 1, Math.floor((x + reach) / CELL))
+    const r0 = Math.max(0, Math.floor((y - reach) / CELL))
+    const r1 = Math.min(GRID_ROWS - 1, Math.floor((y + reach) / CELL))
+    for (let row = r0; row <= r1; row++) {
+      for (let col = c0; col <= c1; col++) {
+        const index = row * GRID_COLS + col
+        if (!inside[index] || cleared[index]) continue
+        const dx = col * CELL + CELL / 2 - x
+        const dy = row * CELL + CELL / 2 - y
+        if (dx * dx + dy * dy <= reach * reach) {
+          cleared[index] = 1
+          count++
+        }
+      }
+    }
+  }
+  return {
+    /** Marks a scratched segment (heart units). */
+    line(a: Point, b: Point) {
+      const steps = Math.max(1, Math.ceil(Math.hypot(b.x - a.x, b.y - a.y) / 4))
+      for (let i = 0; i <= steps; i++) mark(a.x + ((b.x - a.x) * i) / steps, a.y + ((b.y - a.y) * i) / steps)
+    },
+    progress: () => (total ? count / total : 0),
+  }
+}
 
 /** Deterministic PRNG so the glitter pattern survives resizes. */
 function mulberry32(seed: number) {
@@ -98,10 +150,12 @@ export function ScratchHeart({ onReveal, onProgress, revealed }: Props) {
   const strokesRef = useRef<Point[][]>([])
   const currentStrokeRef = useRef<Point[] | null>(null)
   const previousPointRef = useRef<Point | null>(null)
-  const baseAlphaRef = useRef(0)
+  const coverageRef = useRef<ReturnType<typeof createCoverage> | null>(null)
   const revealedRef = useRef(false)
   const lastCheckRef = useRef(0)
   const lastDustRef = useRef(0)
+  // Canvas position cached per stroke — no layout reads on every move event.
+  const rectRef = useRef<DOMRect | null>(null)
   const heartPath = useMemo(() => new Path2D(HEART_PATH), [])
 
   useLayoutEffect(() => {
@@ -116,12 +170,13 @@ export function ScratchHeart({ onReveal, onProgress, revealed }: Props) {
     revealedRef.current = true
     currentStrokeRef.current = null
     previousPointRef.current = null
+    pauseAmbient(false)
     onReveal()
   }, [onReveal])
 
   const withScratchContext = (draw: (context: CanvasRenderingContext2D) => void) => {
     const canvas = canvasRef.current
-    const context = canvas?.getContext('2d', { willReadFrequently: true })
+    const context = canvas?.getContext('2d')
     if (!canvas || !context) return
     context.save()
     context.setTransform(canvas.width / HEART_WIDTH, 0, 0, canvas.height / HEART_HEIGHT, 0, 0)
@@ -144,23 +199,18 @@ export function ScratchHeart({ onReveal, onProgress, revealed }: Props) {
       const width = parent.clientWidth
       const height = parent.clientHeight
       if (width === 0 || height === 0) return
-      const pixelRatio = Math.min(window.devicePixelRatio || 1, 2)
+      const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5)
       const backingWidth = Math.round(width * pixelRatio)
       const backingHeight = Math.round(height * pixelRatio)
       if (canvas.width !== backingWidth) canvas.width = backingWidth
       if (canvas.height !== backingHeight) canvas.height = backingHeight
-      const context = canvas.getContext('2d', { willReadFrequently: true })
+      const context = canvas.getContext('2d')
       if (!context) return
 
       context.setTransform(canvas.width / HEART_WIDTH, 0, 0, canvas.height / HEART_HEIGHT, 0, 0)
       context.clearRect(0, 0, HEART_WIDTH, HEART_HEIGHT)
       if (revealedRef.current) return
       paintCover(context, heartPath)
-
-      const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data
-      let alpha = 0
-      for (let index = 3; index < pixels.length; index += 4) alpha += pixels[index]
-      baseAlphaRef.current = alpha
 
       // Replay strokes so a resize never "heals" the scratched area.
       withScratchContext((ctx) => {
@@ -188,32 +238,29 @@ export function ScratchHeart({ onReveal, onProgress, revealed }: Props) {
   }, [heartPath])
 
   const getPoint = (clientX: number, clientY: number): Point | null => {
-    const canvas = canvasRef.current
-    if (!canvas) return null
-    const rect = canvas.getBoundingClientRect()
-    if (rect.width === 0 || rect.height === 0) return null
+    const rect = rectRef.current ?? canvasRef.current?.getBoundingClientRect()
+    if (!rect || rect.width === 0 || rect.height === 0) return null
     return { x: (clientX - rect.left) / rect.width, y: (clientY - rect.top) / rect.height }
   }
 
+  const coverage = () => (coverageRef.current ??= createCoverage(heartPath))
+
+  const markScratched = (a: Point, b: Point) => {
+    coverage().line({ x: a.x * HEART_WIDTH, y: a.y * HEART_HEIGHT }, { x: b.x * HEART_WIDTH, y: b.y * HEART_HEIGHT })
+  }
+
   const checkProgress = () => {
-    const canvas = canvasRef.current
-    const context = canvas?.getContext('2d', { willReadFrequently: true })
-    if (!canvas || !context || baseAlphaRef.current === 0) return
-    const { data } = context.getImageData(0, 0, canvas.width, canvas.height)
-    let remaining = 0
-    // Sample every 4th pixel — plenty accurate, 4× cheaper.
-    for (let index = 3; index < data.length; index += 16) remaining += data[index]
-    const cleared = Math.max(0, Math.min(1, 1 - (remaining * 4) / baseAlphaRef.current))
+    const cleared = coverage().progress()
     onProgress?.(cleared)
     if (cleared >= REVEAL_THRESHOLD) reveal()
   }
 
   const dust = (clientX: number, clientY: number) => {
     const now = performance.now()
-    if (now - lastDustRef.current < 55) return
+    if (now - lastDustRef.current < 90) return
     lastDustRef.current = now
     burst(clientX, clientY, {
-      count: 3,
+      count: 2,
       speed: 90,
       gravity: 260,
       life: 0.7,
@@ -224,10 +271,12 @@ export function ScratchHeart({ onReveal, onProgress, revealed }: Props) {
 
   const handlePointerDown = (event: PointerEvent<HTMLCanvasElement>) => {
     if (revealedRef.current) return
+    rectRef.current = event.currentTarget.getBoundingClientRect()
     const point = getPoint(event.clientX, event.clientY)
     if (!point) return
     event.preventDefault()
     event.currentTarget.setPointerCapture(event.pointerId)
+    pauseAmbient(true)
     const stroke = [point]
     strokesRef.current.push(stroke)
     currentStrokeRef.current = stroke
@@ -237,6 +286,7 @@ export function ScratchHeart({ onReveal, onProgress, revealed }: Props) {
       ctx.arc(point.x * HEART_WIDTH, point.y * HEART_HEIGHT, SCRATCH_RADIUS, 0, Math.PI * 2)
       ctx.fill()
     })
+    markScratched(point, point)
     dust(event.clientX, event.clientY)
   }
 
@@ -251,6 +301,7 @@ export function ScratchHeart({ onReveal, onProgress, revealed }: Props) {
         stroke.push(point)
         const previous = previousPointRef.current
         previousPointRef.current = point
+        markScratched(previous ?? point, point)
         ctx.beginPath()
         if (previous) {
           ctx.moveTo(previous.x * HEART_WIDTH, previous.y * HEART_HEIGHT)
@@ -264,7 +315,7 @@ export function ScratchHeart({ onReveal, onProgress, revealed }: Props) {
     })
     dust(event.clientX, event.clientY)
     const now = performance.now()
-    if (now - lastCheckRef.current > 220) {
+    if (now - lastCheckRef.current > 120) {
       lastCheckRef.current = now
       checkProgress()
     }
@@ -274,6 +325,7 @@ export function ScratchHeart({ onReveal, onProgress, revealed }: Props) {
     if (!currentStrokeRef.current) return
     currentStrokeRef.current = null
     previousPointRef.current = null
+    pauseAmbient(false)
     if (event.currentTarget.hasPointerCapture(event.pointerId)) {
       event.currentTarget.releasePointerCapture(event.pointerId)
     }

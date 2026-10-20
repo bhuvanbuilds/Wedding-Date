@@ -6,6 +6,7 @@ import type { LanternSkyApi } from '../components/atmosphere/LanternSky'
 import { PetalField } from '../components/atmosphere/PetalField'
 import { Icon } from '../components/shared/Icon'
 import { wedding } from '../config/wedding'
+import { PulseHeart } from '../components/shared/PulseHeart'
 import { burstFrom } from '../lib/fx'
 import { scrollToSection } from '../lib/scroll'
 import { formatLongDate } from '../lib/time'
@@ -41,7 +42,7 @@ export function FinaleSection() {
           })
           .from('.finale__eyebrow', { autoAlpha: 0, y: 10, duration: 1 })
           .from(heading.words, { yPercent: 160, duration: 1.5, stagger: 0.07 }, 0.15)
-          .from('.finale__signature', { autoAlpha: 0, y: 14, filter: 'blur(6px)', duration: 1.4 }, 0.9)
+          .from('.finale__signature', { autoAlpha: 0, y: 14, duration: 1.4 }, 0.9)
           .from(
             '.finale__date, .finale__actions > *, .finale__secret-heart',
             { autoAlpha: 0, y: 14, duration: 1, stagger: 0.1 },
@@ -103,7 +104,7 @@ export function FinaleSection() {
       <div className="finale__horizon" aria-hidden="true" />
 
       <div className="finale__content">
-        <p className="finale__eyebrow">(07 — With gratitude)</p>
+        <p className="finale__eyebrow">(08 — With gratitude)</p>
         <h2 id="finale-title" className="finale__title">
           {wedding.closing.heading}
         </h2>
@@ -128,22 +129,22 @@ export function FinaleSection() {
           </p>
         )}
 
-        <button
-          type="button"
-          className={`finale__secret-heart ${secretOpen ? 'is-open' : ''}`}
-          aria-label={secretOpen ? 'Secret revealed' : 'A little heart'}
-          onClick={(event) => {
-            burstFrom(event.currentTarget, {
-              kinds: { heart: 4 + taps * 2, spark: 8 },
-              speed: 160 + taps * 40,
-              gravity: -40,
-              life: 1.2,
-            })
-            setTaps((value) => value + 1)
-          }}
-        >
-          <Icon name="heart" />
-        </button>
+        <div className={`finale__secret-heart ${secretOpen ? 'is-open' : ''}`}>
+          <PulseHeart
+            mode="tally"
+            size={20}
+            label="Send love"
+            onChange={(_, count, event) => {
+              burstFrom(event.currentTarget, {
+                kinds: { heart: 4 + Math.min(count, 6) * 2, spark: 8 },
+                speed: 160 + Math.min(count, 6) * 40,
+                gravity: -40,
+                life: 1.2,
+              })
+              setTaps(count)
+            }}
+          />
+        </div>
         <p className={`finale__secret ${secretOpen ? 'is-open' : ''}`} aria-live="polite">
           {secretOpen
             ? 'You found our little secret: every heart that taps here is a heart we are grateful for. See you on the day ✦'

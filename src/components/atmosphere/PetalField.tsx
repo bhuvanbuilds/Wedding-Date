@@ -51,6 +51,8 @@ export function PetalField({ density = 14, wind = 18, className = '', opacity = 
 
   useCanvasLoop(canvasRef, {
     animate: !reduced,
+    maxDpr: 1.25,
+    ambient: true,
     resize: ({ width, height }) => {
       const target = Math.max(4, Math.round(((width * height) / 1_000_000) * density * qualityScale()))
       const petals = petalsRef.current.filter((p) => p.x <= width + 40)
@@ -74,7 +76,8 @@ export function PetalField({ density = 14, wind = 18, className = '', opacity = 
         ctx.translate(p.x, p.y)
         ctx.rotate(p.rotation)
         ctx.scale(0.35 + Math.abs(flip) * 0.65, 1)
-        ctx.globalAlpha = opacity * (0.45 + p.z * 0.55)
+        const edge = Math.min(1, (p.y + 40) / 120, (height - p.y) / 120)
+        ctx.globalAlpha = opacity * (0.45 + p.z * 0.55) * Math.max(0, edge)
         ctx.drawImage(p.sprite, -p.size / 2, -p.size / 2, p.size, p.size)
         ctx.restore()
       }

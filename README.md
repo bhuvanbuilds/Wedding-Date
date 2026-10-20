@@ -63,6 +63,19 @@ photos: [
 
 The first two fill the arched portraits; any others form an editorial gallery below. Width/height prevent layout shift.
 
+### The "Moments" gallery (sideways scroll)
+
+When guests scroll down into **Little moments**, the section locks and the photos glide sideways; at the end of the strip the page scrolls down again. It currently shows **8 sample photos from Unsplash**, each tagged "Sample photo". To use your own, edit `gallery.photos` in `wedding.ts`:
+
+```ts
+{ src: '/photos/moment-01.jpg', alt: 'Describe the photo', caption: 'A short line', shape: 'portrait' },
+```
+
+- `shape` is `'portrait'` (tall frame) or `'landscape'` (wide frame). Mix them for rhythm.
+- Remove `sample: true` once a photo is real; the tag disappears.
+- 6–10 photos feel best. An empty list hides the section entirely.
+- With reduced motion turned on, the strip becomes a normal swipeable row.
+
 ### Music
 
 The music toggle is off by default and only starts after a guest taps it. With `audio.src: null` a soft music-box melody is generated live in the browser. To use your own song, add `public/audio/our-song.mp3` and set `audio.src: '/audio/our-song.mp3'` (if the file fails to load, the site falls back to the generated melody).

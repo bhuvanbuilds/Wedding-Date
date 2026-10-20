@@ -8,6 +8,11 @@
   --torn-color: var(--c-wine);
 }
 
+/* Ends on flat parchment so the Moments strip continues without a line. */
+.story.paper {
+  background: linear-gradient(180deg, rgba(243, 230, 208, 0) 85%, var(--c-parchment) 100%), var(--paper);
+}
+
 .rose-sprig {
   color: var(--c-gold-deep);
 }
@@ -323,15 +328,17 @@
 
 .celebrations__bg {
   inset: 0;
-  background: linear-gradient(
-    180deg,
-    var(--c-parchment) 0%,
-    #efdcc2 26%,
-    #c99a92 44%,
-    #6e1f35 58%,
-    var(--c-wine) 70%,
-    var(--c-crimson) 100%
-  );
+  background:
+    var(--grain),
+    linear-gradient(
+      180deg,
+      var(--c-parchment) 0%,
+      #efdcc2 26%,
+      #c99a92 44%,
+      #6e1f35 58%,
+      var(--c-wine) 70%,
+      var(--c-crimson) 100%
+    );
 }
 
 .celebrations .celebrations__evening {

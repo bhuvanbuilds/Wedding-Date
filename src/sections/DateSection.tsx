@@ -2,7 +2,9 @@ import { useMemo, useRef } from 'react'
 import { ease, gsap, mediaConditions, SplitText, splitClasses, useGSAP } from '../animations/gsap'
 import { GlowField } from '../components/atmosphere/GlowField'
 import { AddToCalendar } from '../components/shared/AddToCalendar'
-import { GoldRule, SectionLabel, VerticalRail } from '../components/shared/Decor'
+import { SectionLabel, VerticalRail } from '../components/shared/Decor'
+import { PulseHeart } from '../components/shared/PulseHeart'
+import { burstFrom } from '../lib/fx'
 import { wedding } from '../config/wedding'
 import { useCountdown } from '../hooks/useCountdown'
 import { weddingEntries } from '../lib/calendar'
@@ -62,15 +64,15 @@ export function DateSection() {
           return
         }
         // The giant date fills with light as it scrolls through the viewport.
-        gsap.fromTo(
-          '.giant-date__fill',
-          { clipPath: 'inset(0% 100% 0% 0%)' },
-          {
-            clipPath: 'inset(0% 0% 0% 0%)',
-            ease: 'none',
-            scrollTrigger: { trigger: '.giant-date', start: 'top 80%', end: 'bottom 40%', scrub: 0.6 },
-          },
-        )
+        // The date fills with light from below as it scrolls through view — day/month first, then the year.
+        const [dayMonth, year] = gsap.utils.toArray<HTMLElement>('.giant-date__fill')
+        gsap
+          .timeline({
+            defaults: { ease: 'none' },
+            scrollTrigger: { trigger: '.giant-date', start: 'top 80%', end: 'bottom 42%', scrub: 0.8 },
+          })
+          .fromTo(dayMonth, { backgroundPosition: '50% 0%' }, { backgroundPosition: '50% 100%' })
+          .fromTo(year, { backgroundPosition: '50% 0%' }, { backgroundPosition: '50% 100%' }, '-=0.45')
         gsap.from('.giant-date__line', {
           yPercent: 40,
           autoAlpha: 0,
@@ -171,7 +173,19 @@ export function DateSection() {
           <p className="countdown__message">{formatLongDate(wedding.weddingDate) ?? 'Date to be announced'}</p>
         )}
 
-        <GoldRule />
+        <div className="gold-rule gold-rule--pulse">
+          <span />
+          <PulseHeart
+            showCount={false}
+            size={18}
+            label="Send a little love"
+            onChange={(liked, _, event) => {
+              if (liked)
+                burstFrom(event.currentTarget, { kinds: { heart: 10, spark: 16 }, speed: 220, gravity: -30, life: 1.3 })
+            }}
+          />
+          <span />
+        </div>
 
         <div className="date__meta">
           <p className="date__note">

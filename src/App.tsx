@@ -8,6 +8,7 @@ import { DateSection } from './sections/DateSection'
 import { FinaleSection } from './sections/FinaleSection'
 import { IntroSection } from './sections/IntroSection'
 import { InvitationSection } from './sections/InvitationSection'
+import { MomentsSection } from './sections/MomentsSection'
 import { StorySection } from './sections/StorySection'
 import { TravelSection } from './sections/TravelSection'
 import { WishesSection } from './sections/WishesSection'
@@ -30,13 +31,13 @@ function App() {
         <InvitationSection />
         <DateSection />
         <StorySection />
+        <MomentsSection />
         <CelebrationsSection />
         <TravelSection />
         <WishesSection />
         <FinaleSection />
       </main>
       <FxLayer />
-      <div className="grain" aria-hidden="true" />
     </>
   )
 }

@@ -3,6 +3,7 @@ export const chapters = [
   { id: 'invitation', label: 'The Invitation', mood: 'Mystery' },
   { id: 'date', label: 'The Date', mood: 'Discovery' },
   { id: 'story', label: 'Our Story', mood: 'Romance' },
+  { id: 'moments', label: 'Little Moments', mood: 'Memories' },
   { id: 'celebrations', label: 'Celebrations', mood: 'Celebration' },
   { id: 'travel', label: 'Find Your Way', mood: 'Practical' },
   { id: 'wishes', label: 'Leave a Little Love', mood: 'Connection' },

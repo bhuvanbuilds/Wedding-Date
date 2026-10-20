@@ -62,9 +62,9 @@ export function TravelSection() {
       data-nav-theme="light"
       aria-labelledby="travel-title"
     >
-      <VerticalRail side="right">Chapter 05 — Find your way</VerticalRail>
+      <VerticalRail side="right">Chapter 06 — Find your way</VerticalRail>
       <header className="travel__head">
-        <SectionLabel index="05">Find your way</SectionLabel>
+        <SectionLabel index="06">Find your way</SectionLabel>
         <h2 id="travel-title" className="travel__title">
           Getting there
         </h2>

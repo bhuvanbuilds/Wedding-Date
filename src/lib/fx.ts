@@ -50,10 +50,13 @@ let particles: Particle[] = []
 let raf = 0
 let last = 0
 let dpr = 1
+let dirty = { minX: 0, minY: 0, maxX: 0, maxY: 0 }
 
 function resize() {
   if (!canvas) return
-  dpr = maxCanvasDpr()
+  // Bursts are soft glows in motion — 1.25x is plenty and keeps full-screen clears cheap.
+  dpr = Math.min(maxCanvasDpr(), 1.25)
+  dirty = { minX: 0, minY: 0, maxX: window.innerWidth, maxY: window.innerHeight }
   canvas.width = Math.round(window.innerWidth * dpr)
   canvas.height = Math.round(window.innerHeight * dpr)
 }
@@ -61,6 +64,7 @@ function resize() {
 export function attachFxCanvas(element: HTMLCanvasElement) {
   canvas = element
   ctx = element.getContext('2d')
+  element.style.visibility = 'hidden'
   resize()
   window.addEventListener('resize', resize)
   return () => {
@@ -78,9 +82,11 @@ function frame(now: number) {
   if (!ctx || !canvas) return
   const dt = Math.min(0.05, (now - last) / 1000)
   last = now
-  ctx.setTransform(1, 0, 0, 1, 0, 0)
-  ctx.clearRect(0, 0, canvas.width, canvas.height)
+  // Clear only where particles were drawn last frame (a few gold flecks while
+  // scratching shouldn't cost a full-screen clear).
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+  if (dirty.maxX > dirty.minX) ctx.clearRect(dirty.minX, dirty.minY, dirty.maxX - dirty.minX, dirty.maxY - dirty.minY)
+  dirty = { minX: Infinity, minY: Infinity, maxX: -Infinity, maxY: -Infinity }
 
   const alive: Particle[] = []
   for (const p of particles) {
@@ -100,6 +106,11 @@ function frame(now: number) {
     ctx.globalAlpha = Math.max(0, alpha)
     ctx.globalCompositeOperation = p.kind === 'spark' ? 'lighter' : 'source-over'
     const size = p.kind === 'spark' ? p.size * (1 - t * 0.5) : p.size
+    const pad = size * 0.75 + 2
+    if (p.x - pad < dirty.minX) dirty.minX = p.x - pad
+    if (p.y - pad < dirty.minY) dirty.minY = p.y - pad
+    if (p.x + pad > dirty.maxX) dirty.maxX = p.x + pad
+    if (p.y + pad > dirty.maxY) dirty.maxY = p.y + pad
     if (p.rotation !== 0 || p.kind === 'petal') {
       ctx.save()
       ctx.translate(p.x, p.y)
@@ -115,10 +126,21 @@ function frame(now: number) {
   ctx.globalCompositeOperation = 'source-over'
   particles = alive
   if (particles.length) raf = requestAnimationFrame(frame)
+  else {
+    ctx.setTransform(1, 0, 0, 1, 0, 0)
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    setActive(false)
+  }
+}
+
+// An empty full-screen canvas still costs a blend every frame — hide it when idle.
+const setActive = (active: boolean) => {
+  if (canvas) canvas.style.visibility = active ? 'visible' : 'hidden'
 }
 
 function ensureRunning() {
   if (raf || !ctx) return
+  setActive(true)
   last = performance.now()
   raf = requestAnimationFrame(frame)
 }

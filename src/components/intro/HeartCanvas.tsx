@@ -157,6 +157,7 @@ export function HeartCanvas({ stateRef, apiRef, anchorRef, centerY = 0.36, class
 
   useCanvasLoop(canvasRef, {
     animate: !reduced,
+    maxDpr: 1.5,
     resize: ({ width, height }) => {
       updateGeometry(width, height)
       if (particlesRef.current.length) {
@@ -167,7 +168,7 @@ export function HeartCanvas({ stateRef, apiRef, anchorRef, centerY = 0.36, class
         }
         return
       }
-      const count = Math.round((isLowPower ? 520 : 820) * Math.min(1.2, Math.max(0.7, qualityScale())))
+      const count = Math.round((isLowPower ? 420 : 640) * Math.min(1.2, Math.max(0.7, qualityScale())))
       const sprites = {
         ruby: glowSprite(palette.ruby, 48, '#ffd6de'),
         blush: glowSprite('#f58aa3', 48, '#fff'),

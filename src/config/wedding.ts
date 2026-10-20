@@ -12,6 +12,9 @@ import type { TransportOption, Venue, WeddingConfig } from '../types/wedding'
  *  In development, the browser console lists every value still missing.
  */
 
+/** Sample-image helper (Unsplash CDN, resized on the fly). */
+const unsplash = (id: string) => `https://images.unsplash.com/${id}?auto=format&fit=crop&q=70&w=900`
+
 /** Default travel rows shown for each venue until real details are added. */
 const transportPlaceholders = (): TransportOption[] => [
   { kind: 'car', title: 'By car or taxi', details: null },
@@ -88,6 +91,74 @@ export const wedding: WeddingConfig = {
     chapters: [],
     // Couple photographs placed in /public/photos — see README.
     photos: [],
+  },
+
+  // The sideways-scrolling "Moments" strip. These are SAMPLE images from
+  // Unsplash (free licence) so you can see the layout — replace each `src`
+  // with your own photo (e.g. '/photos/moment-01.jpg' in /public/photos),
+  // update `alt`/`caption`, and delete `sample: true`.
+  gallery: {
+    heading: 'Little moments',
+    intro: 'A few frames from our little universe.',
+    outro: '…and so many more to come.',
+    photos: [
+      {
+        src: unsplash('photo-1613068431228-8cb6a1e92573'),
+        alt: 'Candles glowing among eucalyptus',
+        caption: 'Every little light',
+        shape: 'portrait',
+        sample: true,
+      },
+      {
+        src: unsplash('photo-1518370265276-f22b706aeac8'),
+        alt: 'A diamond ring resting on deep red roses',
+        caption: 'A promise in bloom',
+        shape: 'landscape',
+        sample: true,
+      },
+      {
+        src: unsplash('photo-1529634597503-139d3726fed5'),
+        alt: 'Two hands with wedding rings',
+        caption: 'Two hands, one forever',
+        shape: 'portrait',
+        sample: true,
+      },
+      {
+        src: unsplash('photo-1515934751635-c81c6bc9a2d8'),
+        alt: 'Wedding bands on a pink rose bouquet',
+        caption: 'Soft as a first hello',
+        shape: 'landscape',
+        sample: true,
+      },
+      {
+        src: unsplash('photo-1637616919953-5943e10bd4bf'),
+        alt: 'Wedding rings on a handwritten letter',
+        caption: 'Written in gold',
+        shape: 'portrait',
+        sample: true,
+      },
+      {
+        src: unsplash('photo-1494972308805-463bc619d34e'),
+        alt: 'A field of red roses',
+        caption: 'A garden of yeses',
+        shape: 'landscape',
+        sample: true,
+      },
+      {
+        src: unsplash('photo-1520854221256-17451cc331bf'),
+        alt: 'A couple holding hands, their shadows on the grass',
+        caption: 'Walking the same way',
+        shape: 'portrait',
+        sample: true,
+      },
+      {
+        src: unsplash('photo-1578439231583-9eca0a363860'),
+        alt: 'Close-up of red roses',
+        caption: 'Love, in full bloom',
+        shape: 'landscape',
+        sample: true,
+      },
+    ],
   },
 
   events: [

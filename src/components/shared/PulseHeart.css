@@ -1,0 +1,142 @@
+/* Adapted from React Bits "Pulse Heart" (MIT + Commons Clause) — see THIRD_PARTY_NOTICES.md */
+.pulse-heart {
+  --ph-size: 22px;
+  --ph-pill: rgba(24, 5, 13, 0.45);
+  --ph-idle: #d8b477;
+  --ph-liked: #c61e45;
+  --ph-text: #fff7ec;
+  --ph-roll: 350ms;
+  --ph-stroke: 1.4px;
+  --ph-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+
+  position: relative;
+  display: inline-flex;
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--ph-text);
+  font-family: var(--font-sans);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
+  transition: transform 160ms var(--ph-ease-out);
+}
+
+.pulse-heart[data-pressed] {
+  transform: scale(0.95);
+}
+
+.pulse-heart__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--ph-size) * 0.35);
+  padding: calc(var(--ph-size) * 0.42);
+  padding-inline-end: calc(var(--ph-size) * 0.6);
+  border: 1px solid color-mix(in srgb, var(--ph-idle) 45%, transparent);
+  border-radius: 999px;
+  background: var(--ph-pill);
+  transform-origin: center;
+}
+
+.pulse-heart[data-no-count] .pulse-heart__pill {
+  padding-inline-end: calc(var(--ph-size) * 0.42);
+}
+
+.pulse-heart[data-liked='true'] .pulse-heart__pill {
+  border-color: color-mix(in srgb, var(--ph-liked) 60%, transparent);
+  box-shadow: 0 0 22px -4px color-mix(in srgb, var(--ph-liked) 70%, transparent);
+}
+
+.pulse-heart__heart {
+  display: block;
+  width: var(--ph-size);
+  height: var(--ph-size);
+  color: var(--ph-idle);
+  transition: color 160ms ease;
+}
+
+.pulse-heart__heart svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: var(--ph-stroke);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.pulse-heart[data-liked='true'] .pulse-heart__heart {
+  color: var(--ph-liked);
+}
+
+.pulse-heart[data-liked='true'] .pulse-heart__heart svg {
+  fill: currentColor;
+}
+
+.pulse-heart[data-running] .pulse-heart__heart {
+  transition: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pulse-heart:not([data-liked='true']):hover .pulse-heart__heart {
+    color: color-mix(in srgb, var(--ph-idle) 45%, var(--ph-liked));
+  }
+}
+
+.pulse-heart__count {
+  display: inline-flex;
+  font-size: calc(var(--ph-size) * 0.62);
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--ph-text);
+}
+
+.pulse-heart__count > span {
+  display: block;
+  height: 1em;
+}
+
+.pulse-heart__slot {
+  position: relative;
+  overflow: hidden;
+}
+
+.pulse-heart__roll {
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--ph-roll) var(--ph-ease-out);
+}
+
+.pulse-heart__roll > span {
+  display: block;
+  height: 1em;
+  line-height: 1;
+}
+
+.pulse-heart__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse-heart,
+  .pulse-heart__roll {
+    transition: none;
+  }
+}

@@ -1,0 +1,273 @@
+/* ── Moments · the sideways film strip ─────────────────── */
+/* Flat parchment so it meets the story above and the celebrations below without a line. */
+.moments.paper {
+  background: var(--grain), var(--c-parchment);
+}
+
+.moments {
+  display: flex;
+  height: 100vh;
+  height: 100svh;
+  min-height: 560px;
+  flex-direction: column;
+  padding: calc(var(--nav-h) + var(--safe-top) + 12px) 0 calc(28px + var(--safe-bottom));
+}
+
+.moments .moments__dusk {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 40% at 80% 55%, rgba(198, 30, 69, 0.14), transparent 70%),
+    /* strongest mid-strip, clear at both edges so it meets the parchment above and below */
+    linear-gradient(180deg, rgba(185, 106, 125, 0) 0%, rgba(185, 106, 125, 0.24) 50%, rgba(185, 106, 125, 0) 100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.moments__head {
+  padding: 0 var(--gutter);
+}
+
+.moments__title {
+  margin: 0;
+  color: var(--c-burgundy);
+  font-family: var(--font-display);
+  font-size: clamp(46px, 13vw, 120px);
+  font-weight: 300;
+  letter-spacing: -0.015em;
+  line-height: 0.9;
+}
+
+.moments__meta {
+  display: flex;
+  max-width: 520px;
+  align-items: baseline;
+  gap: 8px;
+  margin: 14px 0 0;
+  color: var(--c-gold-deep);
+}
+
+.moments__count {
+  min-width: 1.6em;
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-style: italic;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.moments__of {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+}
+
+.moments__progress {
+  position: relative;
+  flex: 1;
+  height: 1px;
+  margin-left: 10px;
+  align-self: center;
+  background: rgba(138, 101, 52, 0.25);
+}
+
+.moments__progress > span {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--c-gold-deep), var(--c-ruby));
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.moments__track {
+  display: flex;
+  width: max-content;
+  flex: 1;
+  align-items: center;
+  gap: clamp(30px, 8vw, 90px);
+  margin: 0;
+  padding: 3svh var(--gutter) 0;
+  list-style: none;
+  will-change: transform;
+}
+
+.moments__intro,
+.moments__outro {
+  flex: none;
+  align-self: center;
+}
+
+.moments__intro {
+  position: relative;
+  width: min(64vw, 330px);
+}
+
+.moments__intro p,
+.moments__outro p {
+  margin: 0;
+  color: var(--c-ink);
+  font-family: var(--font-display);
+  font-size: clamp(25px, 7vw, 38px);
+  font-style: italic;
+  line-height: 1.25;
+}
+
+.moments__outro {
+  width: min(70vw, 380px);
+  padding-right: var(--gutter);
+}
+
+.moments__outro p {
+  color: var(--c-burgundy);
+  font-family: var(--font-script);
+  font-size: clamp(36px, 10vw, 58px);
+  font-style: normal;
+  line-height: 1.15;
+}
+
+.moments__sprig {
+  display: block;
+  width: 150px;
+  margin-bottom: 14px;
+  opacity: 0.55;
+}
+
+.moments__hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 22px;
+  color: var(--c-gold-deep);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.moments__hint i {
+  display: inline-block;
+  font-style: normal;
+  animation: nudge 1.8s var(--ease-soft) infinite;
+}
+
+@keyframes nudge {
+  50% {
+    transform: translateX(6px);
+  }
+}
+
+.moment {
+  flex: none;
+}
+
+.moment figure {
+  margin: 0;
+}
+
+.moment--high {
+  align-self: flex-start;
+}
+
+.moment--low {
+  align-self: flex-end;
+}
+
+/* Printed-photograph look: an ivory mat, a gold hairline and a soft drop. */
+.moment__frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+  background: #e9d8b9;
+  box-shadow:
+    0 0 0 6px var(--c-ivory),
+    0 0 0 7px rgba(138, 101, 52, 0.32),
+    0 34px 50px -30px rgba(76, 11, 32, 0.65);
+}
+
+.moment--portrait .moment__frame {
+  height: min(46svh, 470px);
+  aspect-ratio: 3 / 4;
+}
+
+.moment--landscape .moment__frame {
+  width: min(78vw, 600px);
+  aspect-ratio: 4 / 3;
+}
+
+.moment__frame img {
+  position: absolute;
+  top: 0;
+  left: -10%;
+  width: 120%;
+  max-width: none;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+}
+
+.moment__sample {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: rgba(24, 5, 13, 0.62);
+  color: var(--c-ivory);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.moment figcaption {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.moment__num {
+  color: var(--c-gold-deep);
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-style: italic;
+  font-variant-numeric: lining-nums;
+}
+
+.moment__caption {
+  color: var(--c-burgundy);
+  font-family: var(--font-script);
+  font-size: 27px;
+  line-height: 1.2;
+}
+
+@media (min-width: 900px) {
+  .moment--portrait .moment__frame {
+    height: min(52vh, 520px);
+  }
+}
+
+/* Reduced motion: no pinning — a native, swipeable row with snap points. */
+@media (prefers-reduced-motion: reduce) {
+  .moments {
+    height: auto;
+    min-height: 0;
+    padding-bottom: 72px;
+  }
+
+  .moments__track {
+    width: auto;
+    overflow-x: auto;
+    padding-bottom: 24px;
+    scroll-snap-type: x mandatory;
+  }
+
+  .moment,
+  .moments__intro,
+  .moments__outro {
+    scroll-snap-align: center;
+  }
+
+  .moment--portrait .moment__frame {
+    height: 52vh;
+  }
+}

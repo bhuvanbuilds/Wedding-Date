@@ -75,6 +75,18 @@ export interface StoryPhoto {
   height: number
 }
 
+export interface GalleryPhoto {
+  /** Path in /public (e.g. "/photos/01.jpg") or a full image URL. */
+  src: string
+  alt: string
+  /** Short line shown beside the photo. Optional. */
+  caption?: string
+  /** "portrait" or "landscape" framing in the strip. */
+  shape: 'portrait' | 'landscape'
+  /** Marks a stand-in image — shows a small "Sample photo" tag. Remove once real. */
+  sample?: boolean
+}
+
 export interface StoryChapter {
   /** e.g. "2019" or "The first hello". Use only real milestones. */
   label: string
@@ -106,6 +118,8 @@ export interface WeddingConfig {
     chapters: StoryChapter[]
     photos: StoryPhoto[]
   }
+  /** The sideways-scrolling photo strip ("Moments"). Leave photos empty to hide it. */
+  gallery: { heading: string; intro: string; outro: string; photos: GalleryPhoto[] }
   events: [WeddingEvent, WeddingEvent]
   venues: Venue[]
   wishes: {

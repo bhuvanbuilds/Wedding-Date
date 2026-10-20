@@ -83,10 +83,10 @@ export function CelebrationsSection() {
       <div className="celebrations__evening" aria-hidden="true">
         <GlowField density={26} colors={['#D8B477', '#C61E45', '#F0C9CF']} rise={5} />
       </div>
-      <VerticalRail side="left">Chapter 04 — Celebration</VerticalRail>
+      <VerticalRail side="left">Chapter 05 — Celebration</VerticalRail>
 
       <header className="celebrations__head">
-        <SectionLabel index="04">Two celebrations</SectionLabel>
+        <SectionLabel index="05">Two celebrations</SectionLabel>
         <h2 id="celebrations-title" className="celebrations__title">
           Join us
         </h2>

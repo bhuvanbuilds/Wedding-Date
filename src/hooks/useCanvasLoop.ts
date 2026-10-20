@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import type { RefObject } from 'react'
+import { ambient } from '../lib/ambient'
 import { maxCanvasDpr } from '../lib/device'
 
 export interface CanvasFrame {
@@ -21,6 +22,8 @@ interface Options {
   /** When false only a single static frame is drawn per resize. */
   animate?: boolean
   maxDpr?: number
+  /** Decorative loop that may freeze while the guest interacts (see lib/ambient). */
+  ambient?: boolean
 }
 
 /**
@@ -61,8 +64,10 @@ export function useCanvasLoop(canvasRef: RefObject<HTMLCanvasElement | null>, op
       raf = 0
       const f = frame(now)
       last = now
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-      optionsRef.current.draw(f)
+      if (!(optionsRef.current.ambient && ambient.paused)) {
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+        optionsRef.current.draw(f)
+      }
       if (animate && visible && !document.hidden) raf = requestAnimationFrame(tick)
     }
 
@@ -106,7 +111,8 @@ export function useCanvasLoop(canvasRef: RefObject<HTMLCanvasElement | null>, op
         if (visible) startLoop()
         else stopLoop()
       },
-      { rootMargin: '120px 0px' },
+      // No margin: a canvas just above or below the viewport must really sleep.
+      { rootMargin: '0px' },
     )
     intersection.observe(canvas)
 

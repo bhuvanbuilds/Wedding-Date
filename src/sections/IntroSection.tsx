@@ -48,7 +48,7 @@ export function IntroSection() {
           .from('.intro__eyebrow', { autoAlpha: 0, y: 12, duration: duration.m }, 1.3)
           .from(names.chars, { yPercent: 160, rotate: 6, duration: 1.3, stagger: stagger.chars }, 1.5)
           .from('.intro__amp', { autoAlpha: 0, scale: 0.6, rotate: -12, duration: 1.6 }, 1.85)
-          .from(tagline.words, { autoAlpha: 0, y: 14, filter: 'blur(6px)', duration: 1.1, stagger: stagger.words }, 2.3)
+          .from(tagline.words, { autoAlpha: 0, y: 14, duration: 1.1, stagger: stagger.words }, 2.3)
           .from('.intro__petals', { autoAlpha: 0, duration: 2.4, ease: 'sine.inOut' }, 1.8)
           .from('.intro__actions > *', { autoAlpha: 0, y: 18, duration: duration.m, stagger: stagger.items }, 2.6)
           .from('.intro__chrome', { autoAlpha: 0, duration: duration.m, stagger: 0.1 }, 0.4)
@@ -123,21 +123,16 @@ export function IntroSection() {
             scale: 1.1,
           })
         }, 0.2)
-        .to('.intro__content', { autoAlpha: 0, y: -40, duration: 0.8, ease: ease.scene }, 0.1)
-        .add(() => scrollToSection('invitation'), 0.55)
+        .to('.intro__content', { autoAlpha: 0, y: -60, duration: 1.1, ease: ease.scene }, 0.1)
+        .add(() => scrollToSection('invitation', { duration: 1.9, ease: 'power2.inOut' }), 0.3)
         .to({}, { duration: 1.6 }),
     )
-  }
-
-  const skipIntro = () => {
-    introTimeline.current?.progress(1)
-    scrollToSection('invitation')
   }
 
   return (
     <section id="top" ref={root} className="scene intro" data-nav-theme="dark" aria-label="Welcome">
       <div className="intro__bg" aria-hidden="true" />
-      <GlowField density={70} className="intro__motes" />
+      <GlowField density={40} className="intro__motes" />
       <div className="intro__petals">
         <PetalField density={9} wind={14} opacity={0.85} />
       </div>
@@ -175,13 +170,6 @@ export function IntroSection() {
         </div>
       </div>
 
-      <div className="intro__chrome intro__scroll" data-intro-fade aria-hidden="true">
-        <span>Scroll</span>
-        <i />
-      </div>
-      <button type="button" className="intro__chrome intro__skip" data-intro-fade onClick={skipIntro}>
-        Skip intro <Icon name="arrowDown" />
-      </button>
       <VerticalRail side="right" className="intro__chrome">
         {wedding.verse.reference}
       </VerticalRail>

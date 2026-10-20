@@ -39,6 +39,9 @@ export function GlowField({
 
   useCanvasLoop(canvasRef, {
     animate: !reduced,
+    // Soft glows look identical at 1x and cost a fraction to fill.
+    maxDpr: 1,
+    ambient: true,
     resize: ({ width, height }) => {
       const target = Math.max(8, Math.round(((width * height) / 1_000_000) * density * qualityScale()))
       const motes: Mote[] = []
@@ -69,7 +72,10 @@ export function GlowField({
         if (m.x < -20) m.x = width + 20
         if (m.x > width + 20) m.x = -20
         const twinkle = 0.55 + 0.45 * Math.sin(time * m.speed * 1.4 + m.phase)
-        ctx.globalAlpha = m.base * twinkle
+        // Fade out near the top/bottom so motes never end at a hard section seam.
+        const edge = Math.min(1, m.y / 90, (height - m.y) / 90)
+        if (edge <= 0) continue
+        ctx.globalAlpha = m.base * twinkle * edge
         ctx.drawImage(m.sprite, m.x - m.size / 2, m.y - m.size / 2, m.size, m.size)
       }
       ctx.globalAlpha = 1
