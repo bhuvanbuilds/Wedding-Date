@@ -100,9 +100,10 @@
 
 .intro__name {
   display: block;
-  margin-right: -0.13em;
+  margin-right: -0.12em;
   font-size: clamp(31px, 9.7vw, 86px);
-  letter-spacing: 0.13em;
+  font-weight: 400;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   white-space: nowrap;
 }
@@ -126,11 +127,10 @@
 .intro__tagline {
   margin: 18px 0 0;
   color: var(--c-blush);
-  font-family: var(--font-display);
-  font-size: clamp(19px, 5.3vw, 26px);
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: 0.01em;
+  font-family: var(--font-sans);
+  font-size: clamp(14px, 3.9vw, 18px);
+  font-weight: 300;
+  letter-spacing: 0.08em;
 }
 
 .intro__actions {

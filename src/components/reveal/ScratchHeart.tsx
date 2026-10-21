@@ -127,7 +127,7 @@ function paintCover(context: CanvasRenderingContext2D, heart: Path2D) {
   context.clip(heart)
   context.fillStyle = 'rgba(240, 214, 160, 0.85)'
   context.textAlign = 'center'
-  context.font = '500 13px "DM Sans", system-ui, sans-serif'
+  context.font = '500 13px "Montserrat", system-ui, sans-serif'
   if ('letterSpacing' in context)
     (context as CanvasRenderingContext2D & { letterSpacing: string }).letterSpacing = '4px'
   context.fillText('SCRATCH HERE', 152, 128)

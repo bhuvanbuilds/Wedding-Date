@@ -1,0 +1,172 @@
+/* Adapted from React Bits "Depth Carousel" (MIT + Commons Clause) — see THIRD_PARTY_NOTICES.md */
+.depth-carousel {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  align-items: center;
+  justify-content: center;
+  perspective: var(--dc-perspective, 1300px);
+  perspective-origin: 50% 50%;
+  touch-action: pan-y;
+  outline: none;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: grab;
+}
+
+.depth-carousel:active {
+  cursor: grabbing;
+}
+
+.depth-carousel:focus-visible {
+  outline: 2px solid var(--c-gold-deep);
+  outline-offset: 4px;
+  border-radius: 12px;
+}
+
+.depth-carousel__stage {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+/* A printed photograph: ivory mat, gold hairline, soft drop shadow. */
+.depth-carousel__card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  overflow: hidden;
+  background: #e9d8b9;
+  box-shadow:
+    0 0 0 6px var(--c-ivory),
+    0 0 0 7px rgba(138, 101, 52, 0.32),
+    0 34px 56px -26px rgba(76, 11, 32, 0.7);
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+  will-change: transform, opacity;
+}
+
+.depth-carousel__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+.depth-carousel__tint {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.depth-carousel__sample {
+  position: absolute;
+  z-index: 1;
+  top: 10px;
+  left: 10px;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: rgba(24, 5, 13, 0.62);
+  color: var(--c-ivory);
+  font-family: var(--font-sans);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.depth-carousel__arrow {
+  position: absolute;
+  z-index: 3000;
+  top: 50%;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 1px solid rgba(138, 101, 52, 0.45);
+  border-radius: 999px;
+  background: rgba(255, 247, 236, 0.92);
+  box-shadow: 0 10px 24px -12px rgba(76, 11, 32, 0.6);
+  color: var(--c-burgundy);
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.depth-carousel__arrow:active {
+  transform: translateY(-50%) scale(0.92);
+}
+
+@media (hover: hover) {
+  .depth-carousel__arrow:hover {
+    background: var(--c-ivory);
+  }
+}
+
+.depth-carousel__arrow--prev {
+  left: 6px;
+}
+
+.depth-carousel__arrow--next {
+  right: 6px;
+}
+
+.depth-carousel__dots {
+  position: absolute;
+  z-index: 3000;
+  bottom: 0;
+  left: 50%;
+  display: flex;
+  gap: 4px;
+  transform: translateX(-50%);
+}
+
+/* 24px hit area around a small dot. */
+.depth-carousel__dot {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.depth-carousel__dot::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(110, 16, 41, 0.28);
+  content: '';
+  transform: translate(-50%, -50%);
+  transition:
+    width 0.25s ease,
+    background 0.25s ease;
+}
+
+.depth-carousel__dot.is-active::after {
+  width: 18px;
+  background: var(--c-burgundy);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .depth-carousel__card {
+    will-change: auto;
+  }
+
+  .depth-carousel__arrow,
+  .depth-carousel__dot::after {
+    transition: none;
+  }
+}

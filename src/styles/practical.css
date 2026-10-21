@@ -1055,3 +1055,17 @@ p.venue__address.tba {
     min-width: 0;
   }
 }
+
+/* Wedding details — Montserrat 300 with open tracking, per the couple's type spec. */
+.venue__address,
+.transport__text p,
+.date__note,
+.arrival ul {
+  font-weight: 300;
+  letter-spacing: 0.08em;
+}
+
+/* The intro's secondary links sit under a serif title — keep them a touch larger. */
+.intro__actions .text-link {
+  font-size: 13.5px;
+}

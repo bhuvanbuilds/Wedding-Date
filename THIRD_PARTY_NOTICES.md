@@ -1,9 +1,11 @@
 # Third-party notices
 
-## React Bits — Pulse Heart
+## React Bits — Pulse Heart and Depth Carousel
 
-`src/components/shared/PulseHeart.tsx` and `PulseHeart.css` are adapted from the
-"Pulse Heart" component of React Bits (https://reactbits.dev/micro/pulse-heart).
+`src/components/shared/PulseHeart.tsx` / `PulseHeart.css` and
+`src/components/gallery/DepthCarousel.tsx` / `DepthCarousel.css` are adapted from the
+"Pulse Heart" (https://reactbits.dev/micro/pulse-heart) and "Depth Carousel"
+(https://reactbits.dev/components/depth-carousel) components of React Bits.
 
 MIT + Commons Clause License Condition v1.0
 

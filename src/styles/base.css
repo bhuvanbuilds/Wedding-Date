@@ -17,7 +17,7 @@
   --c-ink-soft: #5b3a40;
 
   --font-display: 'Cormorant Garamond', 'Times New Roman', Georgia, serif;
-  --font-sans: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-sans: 'Montserrat', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-script: 'Great Vibes', 'Brush Script MT', cursive;
 
   --gutter: clamp(16px, 5.4vw, 56px);
@@ -330,9 +330,9 @@ a {
   border-radius: 999px;
   background: transparent;
   font-family: var(--font-sans);
-  font-size: 12.5px;
-  font-weight: 500;
-  letter-spacing: 0.16em;
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 0.08em;
   line-height: 1.1;
   text-align: center;
   text-decoration: none;
@@ -435,10 +435,10 @@ a {
   border: 0;
   background: none;
   color: inherit;
-  font-family: var(--font-display);
-  font-size: 17px;
-  font-style: italic;
-  letter-spacing: 0.02em;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 0.08em;
   text-decoration: underline;
   text-decoration-color: rgba(216, 180, 119, 0.55);
   text-decoration-thickness: 1px;
