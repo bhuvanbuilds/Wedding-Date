@@ -15,33 +15,44 @@ import type { TransportOption, Venue, WeddingConfig } from '../types/wedding'
 /** Sample-image helper (Unsplash CDN, resized on the fly). */
 const unsplash = (id: string) => `https://images.unsplash.com/${id}?auto=format&fit=crop&q=70&w=900`
 
-/** Default travel rows shown for each venue until real details are added. */
-const transportPlaceholders = (): TransportOption[] => [
+/** Public transport: guests are routed (Google Maps transit) to St. Joseph's University, the nearest stop. */
+const transitToStJosephs =
+  'https://www.google.com/maps/dir/?api=1&destination=' +
+  encodeURIComponent("St. Joseph's University, Chembarambakkam") +
+  '&travelmode=transit'
+
+/** Travel rows shown for each venue. 
+ull details show "details to follow". */
+const transportFor = (): TransportOption[] => [
+  {
+    kind: 'bus',
+    title: 'By public transport',
+    details: "Bus or train to St. Joseph's University, Chembarambakkam — the nearest stop to the venues.",
+    link: { label: 'Public transport directions', url: transitToStJosephs },
+  },
   { kind: 'car', title: 'By car or taxi', details: null },
-  { kind: 'bus', title: 'By bus', details: null },
-  { kind: 'train', title: 'By train', details: null },
   { kind: 'parking', title: 'Parking', details: null },
 ]
 
 const venues: Venue[] = [
   {
     id: 'marriage-venue',
-    name: null, // e.g. "St. Thomas Cathedral"
-    addressLines: [], // e.g. ["12 Church Road", "Chennai, Tamil Nadu 600001"]
+    name: 'Body of Christ Church',
+    addressLines: ['Kuthambakkam'],
     mapsUrl: null, // paste a Google Maps share link here
     coordinates: null, // e.g. { lat: 13.0418, lng: 80.2341 }
     landmark: null,
-    transport: transportPlaceholders(),
+    transport: transportFor(),
     arrivalNotes: [],
   },
   {
     id: 'reception-venue',
-    name: null,
-    addressLines: [],
+    name: 'Loyola International School',
+    addressLines: ['Palanjur', 'Opposite Queensland'],
     mapsUrl: null,
     coordinates: null,
     landmark: null,
-    transport: transportPlaceholders(),
+    transport: transportFor(),
     arrivalNotes: [],
   },
 ]
@@ -50,8 +61,8 @@ export const wedding: WeddingConfig = {
   projectName: 'A Little Universe of Love',
 
   couple: {
-    partnerOne: { fullName: 'Sam Sperjan', shortName: 'Sam' },
-    partnerTwo: { fullName: 'Prithiksha', shortName: 'Prithiksha' },
+    partnerOne: { fullName: 'Sam M Sperjan', shortName: 'Sam' },
+    partnerTwo: { fullName: 'R Prithiksha', shortName: 'Prithiksha' },
     monogram: 'S & P',
   },
 
@@ -61,7 +72,7 @@ export const wedding: WeddingConfig = {
 
   // Counts down to the start of the wedding day until the marriage time is
   // confirmed. Set `time` (e.g. "10:30") once the ceremony time is final.
-  countdown: { date: '2027-02-08', time: null },
+  countdown: { date: '2027-02-08', time: '04:00' },
 
   verse: {
     reference: 'Song of Solomon 3:4',
@@ -167,8 +178,9 @@ export const wedding: WeddingConfig = {
       name: 'Marriage',
       tagline: 'The vows',
       date: '2027-02-08',
-      startTime: null, // e.g. "10:30"
-      endTime: null,
+      // As given in the client form (AM) — confirm.
+      startTime: '04:00',
+      endTime: '05:30',
       venueId: 'marriage-venue',
       dressCode: null,
       notes: [],
@@ -177,9 +189,10 @@ export const wedding: WeddingConfig = {
       id: 'reception',
       name: 'Reception',
       tagline: 'The celebration',
-      date: null, // confirm the reception date, e.g. "2027-02-08"
-      startTime: null, // e.g. "18:30"
-      endTime: null,
+      date: '2027-02-08',
+      // As given in the client form (AM) — confirm.
+      startTime: '06:00',
+      endTime: '10:00',
       venueId: 'reception-venue',
       dressCode: null,
       notes: [],
@@ -210,7 +223,7 @@ export const wedding: WeddingConfig = {
 
   // Set to the deployed URL (e.g. "https://sam-and-prithiksha.vercel.app")
   // so the share button and link previews use it.
-  siteUrl: null,
+  siteUrl: 'https://wedding-day-reveal.vercel.app',
 }
 
 export const venueById = (id: string) => wedding.venues.find((venue) => venue.id === id)
