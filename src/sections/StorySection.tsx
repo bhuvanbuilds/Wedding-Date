@@ -172,15 +172,29 @@ export function StorySection() {
         <h2 id="story-title" className="story__title">
           {story.heading}
         </h2>
+        {story.subtitle && <p className="story__subtitle">{story.subtitle}</p>}
       </div>
 
-      <div className="arches">
-        <ArchPortrait person={couple.partnerOne} photo={firstPhoto} side="left" />
-        <span className="arches__amp" aria-hidden="true">
-          &amp;
-        </span>
-        <ArchPortrait person={couple.partnerTwo} photo={secondPhoto} side="right" />
-      </div>
+      {story.cover ? (
+        <figure className="story__cover" data-reveal>
+          <img
+            src={story.cover.src}
+            alt={story.cover.alt}
+            width={story.cover.width}
+            height={story.cover.height}
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+      ) : (
+        <div className="arches">
+          <ArchPortrait person={couple.partnerOne} photo={firstPhoto} side="left" />
+          <span className="arches__amp" aria-hidden="true">
+            &amp;
+          </span>
+          <ArchPortrait person={couple.partnerTwo} photo={secondPhoto} side="right" />
+        </div>
+      )}
 
       <div className="story__body">
         {story.intro ? (

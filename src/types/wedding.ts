@@ -114,6 +114,9 @@ export interface WeddingConfig {
   invitation: { teaser: string; instruction: string; promise: string }
   story: {
     heading: string
+    subtitle?: string
+    /** Wide opening illustration shown in place of the two arch portraits. */
+    cover?: StoryPhoto
     intro: string | null
     chapters: StoryChapter[]
     photos: StoryPhoto[]
