@@ -12,8 +12,6 @@ import type { TransportOption, Venue, WeddingConfig } from '../types/wedding'
  *  In development, the browser console lists every value still missing.
  */
 
-/** Sample-image helper (Unsplash CDN, resized on the fly). */
-const unsplash = (id: string) => `https://images.unsplash.com/${id}?auto=format&fit=crop&q=70&w=900`
 
 /** Public transport: guests are routed (Google Maps transit) to St. Joseph's University, the nearest stop. */
 const transitToStJosephs =
@@ -39,8 +37,8 @@ const venues: Venue[] = [
     id: 'marriage-venue',
     name: 'Body of Christ Church',
     addressLines: ['Kuthambakkam'],
-    mapsUrl: null, // paste a Google Maps share link here
-    coordinates: null, // e.g. { lat: 13.0418, lng: 80.2341 }
+    mapsUrl: 'https://maps.app.goo.gl/dAEP8mQojqERYopL7',
+    coordinates: { lat: 13.1080462, lng: 80.2121671 },
     landmark: null,
     transport: transportFor(),
     arrivalNotes: [],
@@ -94,80 +92,112 @@ export const wedding: WeddingConfig = {
 
   story: {
     heading: 'Our Story',
-    // Add a short paragraph in your own words. Leave null to keep the
-    // minimal typographic composition.
-    intro: null,
-    // Real milestones only, e.g.
-    // { label: '2019', title: 'The first hello', body: '…', photo: { src: '/photos/first.jpg', alt: '…', width: 1200, height: 1500 } }
-    chapters: [],
+    subtitle: 'When Timing Meets Grace',
+    cover: { src: '/photos/story/cover.jpg', alt: 'Sam and Prithiksha together', width: 1300, height: 636 },
+    intro:
+      "Some stories don't start with fireworks or loud declarations. They begin quietly — in ordinary moments, shared reflections, and the steady certainty that some things are simply meant to be.",
+    // From the couple's storyboard; panels live in /public/photos/story.
+    chapters: [
+      {
+        label: 'Early 2026',
+        title: 'Across Quiet Prayers',
+        body: "He was in the middle of a personal reset — discipline, quiet reflection, and growth. “I'm only twenty-five, why rush?” She was living with quiet patience, unwilling to settle for anything less than complete peace of mind. Two lives, two prayers, one perfect plan.",
+        photo: { src: '/photos/story/01.jpg', alt: 'Each of them praying, apart', width: 992, height: 636 },
+      },
+      {
+        label: 'A simple Sunday',
+        title: 'The Unexpected Turning Point',
+        body: 'Over lunch after church, a mutual friend noticed her picture on his father’s phone and said, “I’ve known her since childhood — she is exceptional. Play her songs!” Her worship videos soon filled the living room, and something in his heart quietly moved.',
+        photo: { src: '/photos/story/02.jpg', alt: 'Watching her worship video at home', width: 760, height: 636 },
+      },
+      {
+        label: 'A dream',
+        title: 'A Deeper Understanding',
+        body: 'In a striking dream, he saw himself standing in swirling, chaotic darkness, holding a girl’s hand beneath a single beam of clear, steady light — feeling an inexplicable, joyful stillness. Days later, a reflection on divine favour (Ratzon — a grace that surrounds life like a protective shield) anchored that dream into reality. It wasn’t coincidence. It was grace.',
+        photo: { src: '/photos/story/03.jpg', alt: 'Holding hands beneath a beam of light', width: 898, height: 686 },
+      },
+      {
+        label: 'The first meeting',
+        title: 'The Green Shirt',
+        body: '“I had a feeling you’d wear green today.” — her uncle. What people look for as nervous butterflies didn’t appear. Instead, there was clarity.',
+        photo: { src: '/photos/story/04.jpg', alt: 'The first meeting', width: 662, height: 686 },
+      },
+      {
+        label: 'A conversation that felt real',
+        title: 'The First Hello',
+        body: '“Hi! How was your day? How was your meditation?” No rehearsed lines. No pretences. Just two people who never had to pretend to be anyone else.',
+        photo: { src: '/photos/story/05.jpg', alt: 'Their first conversation', width: 796, height: 686 },
+      },
+      {
+        label: 'Standing firm',
+        title: 'The Wait',
+        body: 'When early questions and natural hesitations arose on her side, he didn’t panic or look elsewhere. “I didn’t go out of casual curiosity. I went because of a quiet conviction. We wait.” Patience won. Hesitation turned into mutual peace.',
+        photo: { src: '/photos/story/06.jpg', alt: 'Waiting in quiet thought', width: 690, height: 686 },
+      },
+      {
+        label: 'Small gestures, big meaning',
+        title: 'A Flower in July',
+        body: 'A single flower in July became a daily rhythm of exchanging thoughts, quiet encouragement, and honest values. It wasn’t about grand gestures, but consistent care.',
+        photo: { src: '/photos/story/07.jpg', alt: 'A single flower', width: 746, height: 708 },
+      },
+      {
+        label: 'September 14, 2026',
+        title: 'We Said Yes',
+        body: 'Surrounded by the people who loved us most, we exchanged rings — a beautiful “yes” to God’s perfect timing.',
+        photo: { src: '/photos/story/08.jpg', alt: 'Exchanging rings', width: 744, height: 708 },
+      },
+      {
+        label: 'More of us',
+        title: 'The Days After',
+        body: 'Ice cream dates, conversations about the future, building dreams together. Every week proving that peace isn’t the absence of questions — it’s knowing who stands beside you.',
+        photo: { src: '/photos/story/09.jpg', alt: 'Ice cream together', width: 706, height: 708 },
+      },
+      {
+        label: 'February 8, 2027',
+        title: 'The Beginning of Us',
+        body: 'We step across the threshold to build a warm, honest, and joyful home of our own. We aren’t stepping into this day expecting perfection, but with deep respect, unwavering loyalty, and grateful hearts for a timing far better than our own.',
+        photo: { src: '/photos/story/10.jpg', alt: 'Walking toward the church together', width: 850, height: 708 },
+      },
+    ],
     // Couple photographs placed in /public/photos — see README.
     photos: [],
   },
 
-  // The sideways-scrolling "Moments" strip. These are SAMPLE images from
-  // Unsplash (free licence) so you can see the layout — replace each `src`
-  // with your own photo (e.g. '/photos/moment-01.jpg' in /public/photos),
-  // update `alt`/`caption`, and delete `sample: true`.
+  // The sideways-scrolling "Moments" strip — engagement photos in /public/photos/gallery.
   gallery: {
     heading: 'Little moments',
     intro: 'A few frames from our little universe.',
     outro: '…and so many more to come.',
     photos: [
       {
-        src: unsplash('photo-1613068431228-8cb6a1e92573'),
-        alt: 'Candles glowing among eucalyptus',
-        caption: 'Every little light',
+        src: '/photos/gallery/moment-04.jpg',
+        alt: 'Sam and Prithiksha at their engagement, holding a bouquet',
+        caption: 'The day we said yes',
         shape: 'portrait',
-        sample: true,
       },
       {
-        src: unsplash('photo-1518370265276-f22b706aeac8'),
-        alt: 'A diamond ring resting on deep red roses',
-        caption: 'A promise in bloom',
+        src: '/photos/gallery/moment-01.jpg',
+        alt: 'The couple standing together before the floral backdrop',
+        caption: 'Side by side',
         shape: 'landscape',
-        sample: true,
       },
       {
-        src: unsplash('photo-1529634597503-139d3726fed5'),
-        alt: 'Two hands with wedding rings',
-        caption: 'Two hands, one forever',
+        src: '/photos/gallery/moment-05.jpg',
+        alt: 'Sam and Prithiksha smiling in front of the monogram',
+        caption: 'Just the two of us',
         shape: 'portrait',
-        sample: true,
       },
       {
-        src: unsplash('photo-1515934751635-c81c6bc9a2d8'),
-        alt: 'Wedding bands on a pink rose bouquet',
-        caption: 'Soft as a first hello',
+        src: '/photos/gallery/moment-02.jpg',
+        alt: 'Chocolate engagement cake with their initials',
+        caption: 'A little sweetness',
         shape: 'landscape',
-        sample: true,
       },
       {
-        src: unsplash('photo-1637616919953-5943e10bd4bf'),
-        alt: 'Wedding rings on a handwritten letter',
-        caption: 'Written in gold',
-        shape: 'portrait',
-        sample: true,
-      },
-      {
-        src: unsplash('photo-1494972308805-463bc619d34e'),
-        alt: 'A field of red roses',
-        caption: 'A garden of yeses',
+        src: '/photos/gallery/moment-03.jpg',
+        alt: 'The couple with their families at the engagement',
+        caption: 'Surrounded by love',
         shape: 'landscape',
-        sample: true,
-      },
-      {
-        src: unsplash('photo-1520854221256-17451cc331bf'),
-        alt: 'A couple holding hands, their shadows on the grass',
-        caption: 'Walking the same way',
-        shape: 'portrait',
-        sample: true,
-      },
-      {
-        src: unsplash('photo-1578439231583-9eca0a363860'),
-        alt: 'Close-up of red roses',
-        caption: 'Love, in full bloom',
-        shape: 'landscape',
-        sample: true,
       },
     ],
   },
@@ -216,9 +246,10 @@ export const wedding: WeddingConfig = {
   },
 
   audio: {
-    // Drop an mp3 into /public/audio and set e.g. '/audio/our-song.mp3'.
-    src: null,
-    title: 'A soft music box',
+    // Put the licensed mp3 at /public/audio/perfect.mp3. Until it exists the
+    // site falls back to the soft generated melody.
+    src: '/audio/perfect.mp3',
+    title: 'Perfect — Ed Sheeran',
   },
 
   // Set to the deployed URL (e.g. "https://sam-and-prithiksha.vercel.app")
