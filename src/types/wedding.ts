@@ -83,6 +83,8 @@ export interface GalleryPhoto {
   caption?: string
   /** "portrait" or "landscape" framing in the strip. */
   shape: 'portrait' | 'landscape'
+  /** Optional focal point for cover-cropped images, e.g. "center top". */
+  objectPosition?: string
   /** Marks a stand-in image — shows a small "Sample photo" tag. Remove once real. */
   sample?: boolean
 }

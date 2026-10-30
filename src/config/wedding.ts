@@ -68,9 +68,7 @@ export const wedding: WeddingConfig = {
   dateRevealText: '08 FEB 2027',
   timeZone: 'Asia/Kolkata',
 
-  // Counts down to the start of the wedding day until the marriage time is
-  // confirmed. Set `time` (e.g. "10:30") once the ceremony time is final.
-  countdown: { date: '2027-02-08', time: '04:00' },
+  countdown: { date: '2027-02-08', time: '16:00' },
 
   verse: {
     reference: 'Song of Solomon 3:4',
@@ -199,6 +197,55 @@ export const wedding: WeddingConfig = {
         caption: 'Surrounded by love',
         shape: 'landscape',
       },
+      {
+        src: '/photos/gallery/moment-06.jpeg',
+        alt: 'Sam and Prithiksha holding up their engagement rings',
+        caption: 'A promise in our hands',
+        shape: 'portrait',
+      },
+      {
+        src: '/photos/gallery/moment-08.jpeg',
+        alt: 'Sam and Prithiksha celebrating with their families',
+        caption: 'Our families, together',
+        shape: 'landscape',
+      },
+      {
+        src: '/photos/gallery/moment-09.jpeg',
+        alt: 'Sam and Prithiksha standing with family at the engagement',
+        caption: 'Family by our side',
+        shape: 'landscape',
+        objectPosition: 'center top',
+      },
+      {
+        src: '/photos/gallery/moment-10.jpeg',
+        alt: 'Sam and Prithiksha celebrating with loved ones',
+        caption: 'A day full of joy',
+        shape: 'landscape',
+      },
+      {
+        src: '/photos/gallery/moment-11.jpeg',
+        alt: 'Sam and Prithiksha sharing a special moment at their engagement',
+        caption: 'One unforgettable moment',
+        shape: 'landscape',
+      },
+      {
+        src: '/photos/gallery/moment-12.jpeg',
+        alt: 'Sam and Prithiksha with family at their engagement',
+        caption: 'Love all around us',
+        shape: 'landscape',
+      },
+      {
+        src: '/photos/gallery/moment-13.jpeg',
+        alt: 'Sam celebrating with family at the engagement',
+        caption: 'Celebrating together',
+        shape: 'landscape',
+      },
+      {
+        src: '/photos/gallery/moment-14.jpeg',
+        alt: 'Sam and Prithiksha receiving a gift from their family',
+        caption: 'A thoughtful gift',
+        shape: 'landscape',
+      },
     ],
   },
 
@@ -208,9 +255,8 @@ export const wedding: WeddingConfig = {
       name: 'Marriage',
       tagline: 'The vows',
       date: '2027-02-08',
-      // As given in the client form (AM) — confirm.
-      startTime: '04:00',
-      endTime: '05:30',
+      startTime: '16:00',
+      endTime: '17:30',
       venueId: 'marriage-venue',
       dressCode: null,
       notes: [],
@@ -220,9 +266,8 @@ export const wedding: WeddingConfig = {
       name: 'Reception',
       tagline: 'The celebration',
       date: '2027-02-08',
-      // As given in the client form (AM) — confirm.
-      startTime: '06:00',
-      endTime: '10:00',
+      startTime: '18:00',
+      endTime: '22:00',
       venueId: 'reception-venue',
       dressCode: null,
       notes: [],

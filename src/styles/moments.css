@@ -242,7 +242,11 @@
 
 @media (min-width: 900px) {
   .moment--portrait .moment__frame {
-    height: min(52vh, 520px);
+    height: min(44svh, 470px);
+  }
+
+  .moment--landscape .moment__frame {
+    width: min(78vw, 600px, 56svh);
   }
 }
 

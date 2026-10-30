@@ -188,6 +188,7 @@ export function MomentsSection() {
                     srcSet={srcSet}
                     sizes="(max-width: 700px) 80vw, 40vw"
                     alt={photo.alt}
+                    style={{ objectPosition: photo.objectPosition }}
                     loading="lazy"
                     decoding="async"
                     draggable={false}

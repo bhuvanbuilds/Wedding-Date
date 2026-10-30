@@ -632,12 +632,17 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .event-card__actions > .btn,
 .event-card__actions > .calendar-menu {
-  flex: 1 1 auto;
+  flex: 1 1 170px;
+  min-width: 0;
+}
+
+.event-card__actions > .calendar-menu {
+  width: 100%;
 }
 
 .event-card__actions > .calendar-menu > .btn {
