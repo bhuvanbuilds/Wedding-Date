@@ -299,7 +299,7 @@ export const wedding: WeddingConfig = {
 
   // Set to the deployed URL (e.g. "https://sam-and-prithiksha.vercel.app")
   // so the share button and link previews use it.
-  siteUrl: 'https://wedding-day-reveal.vercel.app',
+  siteUrl: 'https://sam-prithiksha.vercel.app',
 }
 
 export const venueById = (id: string) => wedding.venues.find((venue) => venue.id === id)
